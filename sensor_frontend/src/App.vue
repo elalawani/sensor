@@ -1,8 +1,15 @@
-
 <template>
-  <header>
-      <h1 class="bg-red-50"> Test </h1>
-  </header>
-
-  <RouterView />
+  <div id="app">
+      <navbar/>
+  </div>
+  <router-view/>
 </template>
+<script>
+import navbar from "../src/components/navbar.vue";
+export default {
+    name: 'app',
+    components: {
+        navbar
+    }
+}
+</script>
