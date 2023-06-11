@@ -3,9 +3,7 @@
       <navbar/>
   </div>
   <router-view/>
-
-    1234
-  <toast/>
+    <toast/>
 </template>
 <script>
 import navbar from "../src/components/navbar.vue";

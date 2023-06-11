@@ -1,7 +1,7 @@
 <template>
         <signup-form v-if="formState === 'signup'" @closeForm="formState = ''" @changeForm="showForm('login')"/>
         <login-form v-if="formState === 'login'" @closeForm="formState = ''" @changeForm="showForm('signup')"/>
-    <div v-else class="flex items-center justify-center space-x-5 px-6 py-8 h-screen">
+    <div class="flex items-center justify-center space-x-5 px-6 py-8 h-screen">
         <button
             class="p-3 bg-sky-800 rounded-lg hover:bg-sky-600"
             v-if="formState === ''" @click="showForm('login')"

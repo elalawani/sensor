@@ -37,10 +37,11 @@
                     </form>
 
                     <div v-if="errors.length">
-                        <div class="bg-red-300 text-gray-50 rounded"></div>
+                        <div class="bg-red-300 text-gray-50 rounded">
                         <p v-for="error in errors" :key="error">
                             {{ error }}
                         </p>
+                        </div>
                     </div>
 
                     <div class="flex justify-around">
@@ -98,9 +99,11 @@ export default {
 
             if (this.errors.length === 0) {
                 axios
-                    .post('/api/signup', this.form)
+                    .post('/api/signup/', this.form)
                     .then(response => {
+                        console.log(response.data.message)
                         if (response.data.message === 'success') {
+
                             this.toastStore.showToast(
                                 5000,
                                 'registered, please login',
@@ -115,7 +118,7 @@ export default {
                         else {
                             this.toastStore.showToast(
                                 5000,
-                                'please try agin',
+                                'please try again',
                                 'bg-red-400'
                             )
                         }
