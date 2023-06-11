@@ -18,6 +18,7 @@ export const useUserStore = defineStore({
     actions: {
         initStore() {
             if (localStorage.getItem('user.access')){
+                console.log('user has access')
                 this.user.access = localStorage.getItem('user.access')
                 this.user.refresh = localStorage.getItem('user.refresh')
                 this.user.id = localStorage.getItem('user.id')
@@ -73,15 +74,15 @@ export const useUserStore = defineStore({
         },
 
         refreshToken() {
-            axios.post('/api/accpunt/refresh/', {
+            axios.post('/api/refresh/', {
                 refresh: this.user.refresh
             })
-                .then((respons) => {
-                    this.user.access = respons.data.access
+                .then((response) => {
+                    this.user.access = response.data.access
 
-                    localStorage.setItem('user.access', respons.data.access)
+                    localStorage.setItem('user.access', response.data.access)
 
-                    axios.defaults.headers.common['Authorization'] = "Bearer " + respons.data.access
+                    axios.defaults.headers.common['Authorization'] = "Bearer " + response.data.access
                 })
                 .catch((error) => {
                     console.log(error)

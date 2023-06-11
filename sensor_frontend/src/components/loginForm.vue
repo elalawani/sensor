@@ -6,14 +6,14 @@
                     <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl">
                         Login
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#">
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="submitform">
                         <div>
-                            <label for="username" class="block mb-2 text-sm font-medium ">username</label>
-                            <input type="text" name="username" id="username" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="username" required="">
+                            <label for="email" class="block mb-2 text-sm font-medium ">email</label>
+                            <input type="email" name="email" v-model="form.email" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="email" required>
                         </div>
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" name="password" id="password" placeholder="password" class="border border-gray-300 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" required="">
+                            <input type="password" name="password" v-model="form.password" placeholder="password" class="border border-gray-300 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" required="">
                         </div>
                         <div class="flex items-center justify-between">
                             <div class="flex items-start">
@@ -25,12 +25,17 @@
                                 </div>
                             </div>
                             <a href="#" class="text-sm font-medium  hover:underline ">Forgot password?</a>
-                            <div>
-                                <button @click="signupForm" class="text-gray-100 text-sm hover:underline ">create new account</button>
-                            </div>
+
                         </div>
                         <button type="submit" class="text-gray-50 bg-sky-800 hover:bg-sky-600 rounded-lg text-sm px-5 py-2.5">Sign in</button>
                     </form>
+                    <div v-if="errors.length">
+                        <div class="bg-red-300 text-gray-50 rounded">
+                        <p v-for="error in errors" :key="error">
+                            {{ error }}
+                        </p>
+                        </div>
+                    </div>
                     <div class="flex justify-around">
                         <button @click="$emit('closeForm')">back</button>
                         <button @click="$emit('changeForm')">signup</button>
@@ -43,12 +48,68 @@
 </template>
 <script>
 import signupForm from "@/components/signupForm.vue";
+import axios from "axios";
+import {useToastStore} from "@/stores/toast";
+import {useUserStore} from "@/stores/user";
 
 export default {
     name: 'loginform',
+    setup() {
+        const userStore = useUserStore()
+
+        return {
+            userStore
+        }
+    },
+
+    data() {
+        return {
+            form: {
+                email: '',
+                password: '',
+            },
+            errors: [],
+        }
+    },
     computed: {
         signupForm() {
             return signupForm
+        }
+    },
+     methods: {
+        async submitform() {
+            this.errors = []
+
+
+            if (this.form.email === ''){
+                this.errors.push('please enter email')
+            }
+            if (this.form.password === ''){
+                this.errors.push('please enter password')
+            }
+
+            if (this.errors.length === 0) {
+                await axios
+                    .post('/api/login/', this.form)
+                    .then(response => {
+                        this.userStore.setToken(response.data)
+
+                        axios.defaults.headers.common['Authorization'] = "Bearer " + response.data.access
+
+                    })
+                    .catch(error => {
+                        console.log('error',error)
+                    })
+                await axios
+                    .get('/api/me/')
+                    .then(response => {
+                        this.userStore.setUserInfo(response.data)
+                        this.$router.push('/')
+                    })
+                    .catch(error => {
+                        console.log('error',error)
+                    })
+            }
         }
     }
 }
