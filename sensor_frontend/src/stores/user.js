@@ -18,12 +18,12 @@ export const useUserStore = defineStore({
     actions: {
         initStore() {
             if (localStorage.getItem('user.access')){
-                console.log('user has access')
                 this.user.access = localStorage.getItem('user.access')
                 this.user.refresh = localStorage.getItem('user.refresh')
                 this.user.id = localStorage.getItem('user.id')
                 this.user.name = localStorage.getItem('user.name')
                 this.user.email = localStorage.getItem('user.email')
+                this.user.isAuthenticated = true
 
                 this.refreshToken()
 
@@ -32,7 +32,6 @@ export const useUserStore = defineStore({
         },
 
         setToken(data){
-            console.log('settoken', data)
             this.user.access = data.access
             this.user.refresh = data.refresh
             this.user.isAuthenticated = true
@@ -42,7 +41,6 @@ export const useUserStore = defineStore({
         },
 
         removeToken(){
-            console.log('remove Token')
 
             this.user.access = null
             this.user.refresh = null
@@ -60,7 +58,6 @@ export const useUserStore = defineStore({
         },
 
         setUserInfo(user){
-            console.log('userInfo', user)
 
             this.user.id = user.id
             this.user.name = user.name

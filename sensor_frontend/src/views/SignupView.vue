@@ -33,7 +33,9 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="text-gray-50 bg-sky-800 hover:bg-sky-600 rounded-lg text-sm px-5 py-2.5">Sign up</button>
+                        <div class="flex justify-around">
+                            <button type="submit" class="text-gray-50 bg-sky-800 hover:bg-sky-600 rounded-lg text-sm px-14 py-2.5">Sign up</button>
+                        </div>
                     </form>
 
                     <div v-if="errors.length">
@@ -45,8 +47,7 @@
                     </div>
 
                     <div class="flex justify-around">
-                        <button @click="$emit('closeForm')">back</button>
-                        <button @click="$emit('changeForm')">Login</button>
+                        <router-link to="login">Login</router-link>
                     </div>
                 </div>
             </div>

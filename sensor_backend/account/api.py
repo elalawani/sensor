@@ -3,6 +3,7 @@ from django.http import JsonResponse
 
 from .forms import SignupForm
 
+
 @api_view(['GET'])
 def me(request):
     return JsonResponse({
@@ -10,6 +11,7 @@ def me(request):
         'name': request.user.name,
         'email': request.user.email,
     })
+
 
 @api_view(['POST'])
 @authentication_classes([])
