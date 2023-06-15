@@ -35,8 +35,11 @@
                     <span>
                         patient
                     </span>
-                    <router-link to="/">
+                    <router-link to="all_patients">
                         search
+                    </router-link>
+                    <router-link to="/">
+                        add new patient
                     </router-link>
                 </div>
                 <div>
