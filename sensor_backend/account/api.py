@@ -1,5 +1,9 @@
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.http import JsonResponse
+from rest_framework.response import Response
+
+from .models import User
+from .serializers import UserSerializer
 
 from .forms import SignupForm
 
@@ -33,3 +37,10 @@ def signup(request):
         message = 'error'
 
     return JsonResponse({'message': message})
+
+
+@api_view(['GET'])
+def doctor_list(request):
+    doctors = User.objects.all()
+    serializer = UserSerializer(doctors, many=True)
+    return Response(serializer.data)

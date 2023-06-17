@@ -39,11 +39,11 @@
             </div>
             <!-- add a dropdown to switch between login logout show profile -->
             <div v-if="userStore.user.isAuthenticated">
-                <router-link to="/login">
+                <button @click="userStore.logout">
                     <i class="py-4 px-[18px] hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-200 rounded-full mx-2">
                         <font-awesome-icon icon="fa-solid fa-user" />
                     </i>
-                </router-link>
+                </button>
             </div>
             <div v-else>
                 <div class="flex items-center justify-center space-x-5">

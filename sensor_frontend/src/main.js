@@ -7,6 +7,10 @@ import App from './App.vue'
 import router from './router'
 import axios from "axios";
 
+import Multiselect from '@vueform/multiselect'
+import "@vueform/multiselect/themes/default.css"
+
+
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -40,6 +44,7 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router, axios)
 app.component('font-awesome-icon', FontAwesomeIcon)
+app.component('multi-select', Multiselect)
 
 
 app.mount('#app')

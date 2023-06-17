@@ -42,7 +42,10 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    address = models.TextField()
+    street = models.CharField(max_length=200)
+    nr = models.CharField(max_length=3)
+    PLZ = models.CharField(max_length=5)
+    city = models.CharField(max_length=200)
     date_of_birth = models.DateField(verbose_name="Date of Birth")
     email = models.EmailField(unique=True, null=True)
 
