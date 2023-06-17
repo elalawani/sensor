@@ -63,6 +63,7 @@ class Patient(models.Model):
     medications = models.ManyToManyField(Medication, related_name='patients_medications', blank=True)
     chronicConditions = models.ManyToManyField(ChronicCondition, related_name='patients_chronicConditions', blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    objects = models.Manager()
 
 
 class Conversation(models.Model):
