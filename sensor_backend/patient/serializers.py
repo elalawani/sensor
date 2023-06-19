@@ -7,13 +7,13 @@ from account.serializers import UserSerializer
 class ChronicConditionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChronicCondition
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class MedicationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medication
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class PatientSerializer(serializers.ModelSerializer):

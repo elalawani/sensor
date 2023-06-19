@@ -10,10 +10,12 @@
                             <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl mb-6">
                                 personal information
                             </h1>
-                            <input type="radio" id="mr" value="M" v-model="patInfo.gender" />
-                            <label for="mr">Mr</label>
-                            <input type="radio" id="ms" value="F" v-model="patInfo.gender" />
-                            <label for="ms">Ms</label>
+                            <span class="mr-3" >
+                                <input class="mb-4 hover:cursor-pointer" type="radio" id="mr" value="M" v-model="patInfo.gender" />
+                                <label for="mr">  Male  </label>
+                            </span>
+                            <input class="hover:cursor-pointer" type="radio" id="ms" value="F" v-model="patInfo.gender" />
+                            <label for="ms">  Female</label>
                             <div>
                                 <label for="firstname" class="block mb-2 text-sm font-medium ">first Name</label>
                                 <input type="text" v-model="patInfo.first_name" name="firstname" id="firstname" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="first name" required="">
@@ -61,15 +63,31 @@
                             </h1>
                             <div>
                                 <label for="reason_of_visiting" class="block mb-2 text-sm font-medium ">reason of visiting</label>
-                                <input type="text" v-model="patInfo.reason_of_visiting" name="reason_of_visiting" id="reason_of_visiting" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="for example: Headache" >
+                                <input type="text" v-model="patInfo.reason_of_visiting" name="reason_of_visiting" id="reason_of_visiting" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:border-slate-600" placeholder="for example: Headache" >
                             </div>
                             <div>
                                 <label for="chronic_conditions" class="block my-2 text-sm font-medium ">chronic conditions</label>
-                                <input type="text" v-model="patInfo.chronic_conditions.name" name="chronic_conditions" id="chronic_conditions" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="this must be a drop down list">
+                                 <multi-select
+                                        v-model="patInfo.chronic_condition"
+                                        :options="chronic_conditions"
+                                        mode="tags"
+                                        :close-on-select="false"
+                                        :searchable="true"
+                                        class="text-sky-800"
+                                        placeholder="select conditions"
+                                    />
                             </div>
                             <div>
                                 <label for="medications" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">medications</label>
-                                <input type="text" v-model="patInfo.medications.name" name="medications" placeholder="drop down also" class="border border-gray-300 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600">
+                                 <multi-select
+                                        v-model="patInfo.medication"
+                                        :options="medications"
+                                        mode="tags"
+                                        :close-on-select="false"
+                                        :searchable="true"
+                                        class="text-sky-800"
+                                        placeholder="Select medication"
+                                    />
                             </div>
                         </div>
                         <div v-if="step === 3">
@@ -79,19 +97,12 @@
                             <div>
                                 <label for="Doctors" class="block mb-2 text-sm font-medium ">Doctors</label>
                                 <div>
-                                    <div class="flex flex-row space-x-2">
-                                        <div class="p-1 pl-2 rounded bg-slate-700 mb-1" v-for="(doctor, index_doctor) in patInfo.doctor" :key="index_doctor">
-                                            {{doctors[doctor].label}}
-                                            <span class="hover:cursor-pointer py-1 px-2 rounded-full bg-slate-900 text-xs" @click="removeDoctor(index_doctor)">x</span>
-                                        </div>
-                                    </div>
                                     <multi-select
                                         v-model="patInfo.doctor"
                                         :options="doctors"
-                                        mode="multiple"
+                                        mode="tags"
                                         :close-on-select="false"
                                         :searchable="true"
-                                        :create-option="true"
                                         class="text-sky-800"
                                         placeholder="Select Doctors"
                                     />
@@ -100,27 +111,22 @@
                             <div>
                                 <label for="nurses" class="block mt-12 mb-2 text-sm font-medium ">nurses</label>
                                 <div>
-                                    <div class="flex flex-row space-x-2">
-                                        <div class="p-1 pl-2 rounded bg-slate-700 mb-1" v-for="(nurse, index_nurse) in patInfo.nurse" :key="index_nurse">
-                                            {{nurses[nurse].label}}
-                                            <span class="hover:cursor-pointer py-1 px-2 rounded-full bg-slate-900 text-xs" @click="removeNurse(index_nurse)">x</span>
-                                        </div>
-                                    </div>
+
                                     <multi-select
                                         v-model="patInfo.nurse"
                                         :options="nurses"
-                                        mode="multiple"
+                                        mode="tags"
                                         :close-on-select="false"
-                                        :search="true"
+                                        :searchable="true"
                                         class="text-sky-800"
                                         placeholder="Select Nurses"
                                     />
                                 </div>
                             </div>
-                             <div class="flex justify-around">
+                            <div class="flex justify-around">
 
-                            <button type="submit" class="text-gray-50 bg-sky-800 hover:bg-sky-600 rounded-lg text-sm mt-5 px-14 py-2.5">Add Patient</button>
-                        </div>
+                                <button type="submit" class="text-gray-50 bg-sky-800 hover:bg-sky-600 rounded-lg text-sm mt-5 px-14 py-2.5">Add Patient</button>
+                            </div>
                         </div>
 
                     </form>
@@ -162,6 +168,8 @@ export default {
             step: 1,
             doctors: [],
             nurses: [],
+            medications: [],
+            chronic_conditions: [],
             patInfo: {
                 first_name: '',
                 last_name: '',
@@ -174,8 +182,8 @@ export default {
                 email: '',
                 phone: '',
                 reason_of_visiting: '',
-                medications: [],
-                chronic_conditions: [],
+                medication: [],
+                chronic_condition: [],
                 doctor: [],
                 nurse: [],
             },
@@ -212,7 +220,7 @@ export default {
             }
 */
 
-            console.log(this.patInfo)
+            console.log(this.doctors)
                 axios
                     .post(
                         '/api/patients/create/',
@@ -240,8 +248,8 @@ export default {
                             this.patInfo.email = ''
                             this.patInfo.phone = ''
                             this.patInfo.reason_of_visiting = ''
-                            this.patInfo.medications = []
-                            this.patInfo.chronic_conditions = []
+                            this.patInfo.medication = []
+                            this.patInfo.chronic_condition = []
                             this.patInfo.doctor = []
                             this.patInfo.nurses = []
 
@@ -259,92 +267,46 @@ export default {
                         console.log('error',error)
                     })
         },
-         removeDoctor(index) {
-        this.patInfo.doctor.splice(index, 1);
-    },
-        removeNurse(index) {
-        this.patInfo.nurse.splice(index, 1);
-    },
+
     },
 
     async mounted() {
     const response_doctors = await axios.get('/api/doctors/');
-    this.doctors = response_doctors.data.map((doctor, index) => ({
-        value: index,
+    this.doctors = response_doctors.data.map(doctor => ({
+        value: doctor.id,
         label: doctor.name
     }));
 
     const response_nurses = await axios.get('/api/nurses/');
-    this.nurses = response_nurses.data.map((nurse, index) => ({
-        value: index,
+    this.nurses = response_nurses.data.map(nurse => ({
+        value: nurse.id,
         label: nurse.name
     }));
+
+
+    const response_conditions = await axios.get('/api/patients/chronic_conditions/');
+    this.chronic_conditions = response_conditions.data.map(chronic_condition => ({
+        value: chronic_condition.id,
+        label: chronic_condition.name
+    }));
+
+    console.log(response_conditions)
+
+
+    const response_medications = await axios.get('/api/patients/medications/');
+    this.medications = response_medications.data.map(medication => ({
+        value: medication.id,
+        label: medication.name
+    }));
+
+        console.log(response_medications)
+
+
   },
 }
-/*
-<template>
-  <Multiselect
-    v-model="value"
-    mode="tags"
-    placeholder="Select employees"
-    track-by="name"
-    label="name"
-    :close-on-select="false"
-    :search="true"
-    :options="[
-      { value: 'judy', name: 'Judy', image: 'https://randomuser.me/api/portraits/med/women/1.jpg' },
-      { value: 'jane', name: 'Jane', image: 'https://randomuser.me/api/portraits/med/women/2.jpg' },
-      { value: 'john', name: 'John', image: 'https://randomuser.me/api/portraits/med/men/1.jpg' },
-      { value: 'joe', name: 'Joe', image: 'https://randomuser.me/api/portraits/med/men/2.jpg' }
-    ]"
-  >
-    <template v-slot:tag="{ option, handleTagRemove, disabled }">
-      <div
-        class="multiselect-tag is-user"
-        :class="{
-          'is-disabled': disabled
-        }"
-       >
-        <img :src="option.image">
-        {{ option.name }}
-        <span
-           v-if="!disabled"
-           class="multiselect-tag-remove"
-           @mousedown.prevent="handleTagRemove(option, $event)"
-        >
-          <span class="multiselect-tag-remove-icon"></span>
-        </span>
-      </div>
-    </template>
- </Multiselect>
-</template>
-
-<style>
-  .multiselect-tag.is-user {
-    padding: 5px 8px;
-    border-radius: 22px;
-    background: #35495e;
-    margin: 3px 3px 8px;
-  }
-
-  .multiselect-tag.is-user img {
-    width: 18px;
-    border-radius: 50%;
-    height: 18px;
-    margin-right: 8px;
-    border: 2px solid #ffffffbf;
-  }
-
-  .multiselect-tag.is-user i:before {
-    color: #ffffff;
-    border-radius: 50%;;
-  }
-
-  .user-image {
-    margin: 0 6px 0 0;
-    border-radius: 50%;
-    height: 22px;
-  }
-</style>
-*/
 </script>
+<style>
+.multiselect-tag{
+    background: #64748b !important;
+}
+</style>

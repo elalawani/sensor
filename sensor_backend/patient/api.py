@@ -1,19 +1,35 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
-from .serializers import PatientSerializer
-from .models import Patient
+from .serializers import PatientSerializer, MedicationsSerializer, ChronicConditionsSerializer
+from .models import Patient, Medication, ChronicCondition
 from .forms import PatientForm
 
 
 @api_view(['GET'])
-@authentication_classes([])
-@permission_classes([])
 def patient_list(request):
     patients = Patient.objects.all()
 
     serializer = PatientSerializer(patients, many=True, context={'request': request})
 
+    return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+def medications_list(request):
+    medications = Medication.objects.all()
+
+    serializer = MedicationsSerializer(medications, many=True, context={'request': request})
+    print(serializer.data)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+def chronic_conditions_list(request):
+    chronic_conditions = ChronicCondition.objects.all()
+
+    serializer = ChronicConditionsSerializer(chronic_conditions, many=True, context={'request': request})
+    print(serializer.data)
     return JsonResponse(serializer.data, safe=False)
 
 

@@ -43,6 +43,7 @@ def signup(request):
 def doctor_list(request):
     doctors = User.objects.filter(role='DR')
     serializer = UserSerializer(doctors, many=True, context={'request': request})
+    print(serializer.data)
     return Response(serializer.data)
 
 

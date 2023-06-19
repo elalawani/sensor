@@ -38,7 +38,7 @@
                     <router-link to="all_patients">
                         search
                     </router-link>
-                    <router-link to="/">
+                    <router-link to="add_patient">
                         add new patient
                     </router-link>
                 </div>
