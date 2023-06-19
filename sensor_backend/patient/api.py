@@ -7,6 +7,8 @@ from .forms import PatientForm
 
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
 def patient_list(request):
     patients = Patient.objects.all()
 
@@ -16,13 +18,18 @@ def patient_list(request):
 
 
 @api_view(['POST'])
-def add_patient(reguest):
+def add_patient(request):
+    print('test', request.user)
 
-    form = PatientForm(reguest.data)
-
+    print(request.data)
+    form = PatientForm(request.data)
+    message = 'success'
     if form.is_valid():
         patient = form.save(commit=False)
-        patient.created_by = reguest.user
+        patient.created_by = request.user
         patient.save()
 
-    return JsonResponse({'nasri': 'nasri'})
+    else:
+        message = 'error'
+
+    return JsonResponse({'message': message})

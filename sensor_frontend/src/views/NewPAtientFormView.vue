@@ -31,21 +31,21 @@
                             <div class="flex justify-between flex-row space-x-2 items-center">
                                 <div class="w-full">
                                     <label for="street" class="block my-2 text-sm font-medium">Street</label>
-                                    <input type="text" v-model="patInfo.address.street" name="street" id="street" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="last name" required="">
+                                    <input type="text" v-model="patInfo.street" name="street" id="street" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="last name" required="">
                                 </div>
                                 <div>
                                     <label for="nr" class=" block my-2 text-sm font-medium ">nr.</label>
-                                    <input type="text" v-model="patInfo.address.nr" name="nr" id="nr" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="nr." required="">
+                                    <input type="text" v-model="patInfo.nr" name="nr" id="nr" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="nr." required="">
                                 </div>
                             </div>
                              <div class="flex justify-between flex-row space-x-2 items-center">
                                 <div>
                                     <label for="plz" class="block my-2 text-sm font-medium">PLZ</label>
-                                    <input type="text" v-model="patInfo.address.PLZ" name="plz" id="plz" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="PLZ" required="">
+                                    <input type="text" v-model="patInfo.PLZ" name="plz" id="plz" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="PLZ" required="">
                                 </div>
                                 <div class="w-full">
                                     <label for="city" class=" block my-2 text-sm font-medium ">City</label>
-                                    <input type="text" v-model="patInfo.address.city" name="city" id="city" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="City" required="">
+                                    <input type="text" v-model="patInfo.city" name="city" id="city" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="City" required="">
                                 </div>
                             </div>
                             <div>
@@ -61,58 +61,61 @@
                             </h1>
                             <div>
                                 <label for="reason_of_visiting" class="block mb-2 text-sm font-medium ">reason of visiting</label>
-                                <input type="text" v-model="patInfo.medicalHistory.reason_of_visiting" name="reason_of_visiting" id="reason_of_visiting" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="for example: Headache" >
+                                <input type="text" v-model="patInfo.reason_of_visiting" name="reason_of_visiting" id="reason_of_visiting" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="for example: Headache" >
                             </div>
                             <div>
                                 <label for="chronic_conditions" class="block my-2 text-sm font-medium ">chronic conditions</label>
-                                <input type="text" v-model="patInfo.medicalHistory.chronic_conditions" name="chronic_conditions" id="chronic_conditions" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="this must be a drop down list">
+                                <input type="text" v-model="patInfo.chronic_conditions.name" name="chronic_conditions" id="chronic_conditions" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="this must be a drop down list">
                             </div>
                             <div>
                                 <label for="medications" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">medications</label>
-                                <input type="text" v-model="patInfo.medicalHistory.medications" name="medications" placeholder="drop down also" class="border border-gray-300 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600">
+                                <input type="text" v-model="patInfo.medications.name" name="medications" placeholder="drop down also" class="border border-gray-300 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600">
                             </div>
-                            <div>
-                                <label for="measurements" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">is there any measurements ? </label>
-                                <div class="flex flex-row justify-start">
-                                  yes  <input type="radio" value="y" v-model="patInfo.medicalHistory.measurements" name="measurements"  placeholder="repeat password" class="  w-[10%] p-1">
-                             no   <input type="radio" value="n" v-model="patInfo.medicalHistory.measurements" name="measurements"  placeholder="repeat password" class=" w-[10%]   p-1 ">
-                                </div>
-                                <div>
-                                </div>
-
-                                   </div>
                         </div>
-                        <div v-if="step === 3 && patInfo.medicalHistory.measurements === 'y'">
-                            <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl mb-6">
-                                add Measurement +
-                            </h1>
-
-                        </div>
-                        <div v-if="step === 4 || step === 3 && patInfo.medicalHistory.measurements === 'n'">
+                        <div v-if="step === 3">
                             <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl mb-6">
                                 add Relations
                             </h1>
                             <div>
                                 <label for="Doctors" class="block mb-2 text-sm font-medium ">Doctors</label>
                                 <div>
-                                    <div>
-                                        {{doctors}}
+                                    <div class="flex flex-row space-x-2">
+                                        <div class="p-1 pl-2 rounded bg-slate-700 mb-1" v-for="(doctor, index_doctor) in patInfo.doctor" :key="index_doctor">
+                                            {{doctors[doctor].label}}
+                                            <span class="hover:cursor-pointer py-1 px-2 rounded-full bg-slate-900 text-xs" @click="removeDoctor(index_doctor)">x</span>
+                                        </div>
                                     </div>
                                     <multi-select
-                                        v-model="patInfo.relatedPerson.doctor"
+                                        v-model="patInfo.doctor"
                                         :options="doctors"
                                         mode="multiple"
                                         :close-on-select="false"
                                         :searchable="true"
                                         :create-option="true"
                                         class="text-sky-800"
+                                        placeholder="Select Doctors"
                                     />
                                 </div>
-                                <input type="text" v-model="patInfo.relatedPerson.doctor" name="Doctors" id="Doctors" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="username" required="">
                             </div>
                             <div>
-                                <label for="nurses" class="block my-2 text-sm font-medium ">nurses</label>
-                                <input type="text" v-model="patInfo.relatedPerson.nurses" name="nurses" id="nurses" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="your Email" required="">
+                                <label for="nurses" class="block mt-12 mb-2 text-sm font-medium ">nurses</label>
+                                <div>
+                                    <div class="flex flex-row space-x-2">
+                                        <div class="p-1 pl-2 rounded bg-slate-700 mb-1" v-for="(nurse, index_nurse) in patInfo.nurse" :key="index_nurse">
+                                            {{nurses[nurse].label}}
+                                            <span class="hover:cursor-pointer py-1 px-2 rounded-full bg-slate-900 text-xs" @click="removeNurse(index_nurse)">x</span>
+                                        </div>
+                                    </div>
+                                    <multi-select
+                                        v-model="patInfo.nurse"
+                                        :options="nurses"
+                                        mode="multiple"
+                                        :close-on-select="false"
+                                        :search="true"
+                                        class="text-sky-800"
+                                        placeholder="Select Nurses"
+                                    />
+                                </div>
                             </div>
                              <div class="flex justify-around">
 
@@ -124,7 +127,7 @@
 
                     <div class="flex justify-around">
                         <button @click="previous" v-if="step > 1">&lt; Previous</button>
-                        <button @click="next" v-if="step < 4 ">next  &gt; </button>
+                        <button @click="next" v-if="step < 3 ">next  &gt; </button>
                     </div>
                     <div v-if="errors.length">
                         <div class="bg-red-300 text-gray-50 rounded">
@@ -158,43 +161,30 @@ export default {
         return {
             step: 1,
             doctors: [],
+            nurses: [],
             patInfo: {
                 first_name: '',
                 last_name: '',
                 gender: '',
-                address: {
-                    street: '',
-                    nr: '',
-                    PLZ: '',
-                    city: '',
-                },
+                street: '',
+                nr: '',
+                PLZ: '',
+                city: '',
                 date_of_birth: '',
                 email: '',
                 phone: '',
-                medicalHistory: {
-                    reason_of_visiting: '',
-                    medications: '',
-                    chronic_conditions: '',
-                    measurements: false,
-                },
-                measurements: {
-                    type: '',
-                    eval: '',
-                    comment: '',
-                    date_of_measure: '',
-                },
-                relatedPerson: {
-                    doctor: null,
-                    nurses: '',
-                },
+                reason_of_visiting: '',
+                medications: [],
+                chronic_conditions: [],
+                doctor: [],
+                nurse: [],
             },
-
             errors: [],
         }
     },
     methods: {
         next() {
-            if (this.step < 4) {
+            if (this.step < 3) {
                 this.step += 1;
             }
         },
@@ -221,11 +211,17 @@ export default {
                 this.errors.push('no match found')
             }
 */
+
+            console.log(this.patInfo)
                 axios
-                    .post('/api/patients/create/', this.patInfo)
+                    .post(
+                        '/api/patients/create/',
+                        this.patInfo,
+                    )
                     .then(response => {
-                        console.log(this.patInfo)
+                        console.log( 'response', response.data)
                         if (response.data.message === 'success') {
+
 
                             this.toastStore.showToast(
                                 5000,
@@ -236,26 +232,22 @@ export default {
                             this.patInfo.first_name = ''
                             this.patInfo.last_name = ''
                             this.patInfo.gender = ''
-                            this.patInfo.address.street = ''
-                            this.patInfo.address.nr = ''
-                            this.patInfo.address.city = ''
-                            this.patInfo.address.PLZ = ''
+                            this.patInfo.street = ''
+                            this.patInfo.nr = ''
+                            this.patInfo.city = ''
+                            this.patInfo.PLZ = ''
                             this.patInfo.date_of_birth = ''
                             this.patInfo.email = ''
                             this.patInfo.phone = ''
-                            this.patInfo.medicalHistory.reason_of_visiting = ''
-                            this.patInfo.medicalHistory.medications = ''
-                            this.patInfo.medicalHistory.measurements = false
-                            this.patInfo.medicalHistory.chronic_conditions = ''
-                            this.patInfo.measurements.type = ''
-                            this.patInfo.measurements.eval = ''
-                            this.patInfo.measurements.comment = ''
-                            this.patInfo.measurements.date_of_measure = ''
-                            this.patInfo.relatedPerson.doctor = ''
-                            this.patInfo.relatedPerson.nurses = ''
+                            this.patInfo.reason_of_visiting = ''
+                            this.patInfo.medications = []
+                            this.patInfo.chronic_conditions = []
+                            this.patInfo.doctor = []
+                            this.patInfo.nurses = []
 
                         }
                         else {
+                            console.log(response.data)
                             this.toastStore.showToast(
                                 5000,
                                 'please try again',
@@ -267,14 +259,92 @@ export default {
                         console.log('error',error)
                     })
         },
+         removeDoctor(index) {
+        this.patInfo.doctor.splice(index, 1);
+    },
+        removeNurse(index) {
+        this.patInfo.nurse.splice(index, 1);
+    },
     },
 
     async mounted() {
-    const response = await axios.get('/api/doctors/');
-    this.doctors = response.data.map((doctor, index) => ({
+    const response_doctors = await axios.get('/api/doctors/');
+    this.doctors = response_doctors.data.map((doctor, index) => ({
         value: index,
         label: doctor.name
     }));
+
+    const response_nurses = await axios.get('/api/nurses/');
+    this.nurses = response_nurses.data.map((nurse, index) => ({
+        value: index,
+        label: nurse.name
+    }));
   },
 }
+/*
+<template>
+  <Multiselect
+    v-model="value"
+    mode="tags"
+    placeholder="Select employees"
+    track-by="name"
+    label="name"
+    :close-on-select="false"
+    :search="true"
+    :options="[
+      { value: 'judy', name: 'Judy', image: 'https://randomuser.me/api/portraits/med/women/1.jpg' },
+      { value: 'jane', name: 'Jane', image: 'https://randomuser.me/api/portraits/med/women/2.jpg' },
+      { value: 'john', name: 'John', image: 'https://randomuser.me/api/portraits/med/men/1.jpg' },
+      { value: 'joe', name: 'Joe', image: 'https://randomuser.me/api/portraits/med/men/2.jpg' }
+    ]"
+  >
+    <template v-slot:tag="{ option, handleTagRemove, disabled }">
+      <div
+        class="multiselect-tag is-user"
+        :class="{
+          'is-disabled': disabled
+        }"
+       >
+        <img :src="option.image">
+        {{ option.name }}
+        <span
+           v-if="!disabled"
+           class="multiselect-tag-remove"
+           @mousedown.prevent="handleTagRemove(option, $event)"
+        >
+          <span class="multiselect-tag-remove-icon"></span>
+        </span>
+      </div>
+    </template>
+ </Multiselect>
+</template>
+
+<style>
+  .multiselect-tag.is-user {
+    padding: 5px 8px;
+    border-radius: 22px;
+    background: #35495e;
+    margin: 3px 3px 8px;
+  }
+
+  .multiselect-tag.is-user img {
+    width: 18px;
+    border-radius: 50%;
+    height: 18px;
+    margin-right: 8px;
+    border: 2px solid #ffffffbf;
+  }
+
+  .multiselect-tag.is-user i:before {
+    color: #ffffff;
+    border-radius: 50%;;
+  }
+
+  .user-image {
+    margin: 0 6px 0 0;
+    border-radius: 50%;
+    height: 22px;
+  }
+</style>
+*/
 </script>

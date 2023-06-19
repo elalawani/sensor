@@ -61,9 +61,9 @@ class Patient(models.Model):
                                     limit_choices_to={'role': User.NURSE}, blank=True)
     surgeries = models.ManyToManyField(Surgery, related_name='patients_surgeries', blank=True)
     medications = models.ManyToManyField(Medication, related_name='patients_medications', blank=True)
+    reason_of_visiting = models.TextField(blank=True)
     chronicConditions = models.ManyToManyField(ChronicCondition, related_name='patients_chronicConditions', blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    objects = models.Manager()
 
 
 class Conversation(models.Model):
