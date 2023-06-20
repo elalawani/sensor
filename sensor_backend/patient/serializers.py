@@ -17,10 +17,10 @@ class MedicationsSerializer(serializers.ModelSerializer):
 
 
 class PatientSerializer(serializers.ModelSerializer):
-    doctors = UserSerializer(many=True, read_only=True)
-    nurses = UserSerializer(many=True, read_only=True)
-    chronicConditions = ChronicConditionsSerializer(many=True, read_only=True)
-    medications = MedicationsSerializer(many=True, read_only=True)
+    doctors = UserSerializer(many=True, read_only=False)
+    nurses = UserSerializer(many=True, read_only=False)
+    chronicConditions = ChronicConditionsSerializer(many=True, read_only=False)
+    medications = MedicationsSerializer(many=True, read_only=False)
 
     class Meta:
         model = Patient

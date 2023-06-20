@@ -65,6 +65,9 @@ class Patient(models.Model):
     chronicConditions = models.ManyToManyField(ChronicCondition, related_name='patients_chronicConditions', blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.first_name
+
 
 class Conversation(models.Model):
     patient = models.ForeignKey(Patient, related_name='conversations', on_delete=models.CASCADE)

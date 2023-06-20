@@ -1,15 +1,14 @@
-from django.forms import ModelForm
+from django import forms
 
-from .models import Patient
-from .serializers import ChronicConditionsSerializer, MedicationsSerializer
-from account.serializers import UserSerializer
+from .models import Patient, ChronicCondition, Medication
+from account.models import User
 
 
-class PatientForm(ModelForm):
-    doctors = UserSerializer(many=True, read_only=True)
-    nurses = UserSerializer(many=True, read_only=True)
-    chronicConditions = ChronicConditionsSerializer(many=True, read_only=True)
-    medications = MedicationsSerializer(many=True, read_only=True)
+class PatientForm(forms.ModelForm):
+    doctors = forms.ModelMultipleChoiceField(queryset=User.objects.filter(role='DR'), required=False)
+    nurses = forms.ModelMultipleChoiceField(queryset=User.objects.filter(role='NR'), required=False)
+    chronicConditions = forms.ModelMultipleChoiceField(queryset=ChronicCondition.objects.all(), required=False)
+    medications = forms.ModelMultipleChoiceField(queryset=Medication.objects.all(), required=False)
 
     class Meta:
         model = Patient

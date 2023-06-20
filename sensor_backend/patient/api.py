@@ -37,12 +37,17 @@ def chronic_conditions_list(request):
 def add_patient(request):
     print('test', request.user)
 
-    print(request.data)
+    print('request.data:', request.data)
     form = PatientForm(request.data)
     message = 'success'
     if form.is_valid():
         patient = form.save(commit=False)
         patient.created_by = request.user
+        patient.save()
+        patient.doctors.set(form.cleaned_data.get('doctors'))
+        patient.nurses.set(form.cleaned_data.get('nurses'))
+        patient.chronicConditions.set(form.cleaned_data.get('chronicConditions'))
+        patient.medications.set(form.cleaned_data.get('medications'))
         patient.save()
 
     else:

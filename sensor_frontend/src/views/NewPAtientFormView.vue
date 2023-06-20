@@ -68,7 +68,7 @@
                             <div>
                                 <label for="chronic_conditions" class="block my-2 text-sm font-medium ">chronic conditions</label>
                                  <multi-select
-                                        v-model="patInfo.chronic_condition"
+                                        v-model="patInfo.chronicConditions"
                                         :options="chronic_conditions"
                                         mode="tags"
                                         :close-on-select="false"
@@ -80,13 +80,13 @@
                             <div>
                                 <label for="medications" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">medications</label>
                                  <multi-select
-                                        v-model="patInfo.medication"
+                                        v-model="patInfo.medications"
                                         :options="medications"
                                         mode="tags"
                                         :close-on-select="false"
                                         :searchable="true"
                                         class="text-sky-800"
-                                        placeholder="Select medication"
+                                        placeholder="Select medications"
                                     />
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                                 <label for="Doctors" class="block mb-2 text-sm font-medium ">Doctors</label>
                                 <div>
                                     <multi-select
-                                        v-model="patInfo.doctor"
+                                        v-model="patInfo.doctors"
                                         :options="doctors"
                                         mode="tags"
                                         :close-on-select="false"
@@ -113,7 +113,7 @@
                                 <div>
 
                                     <multi-select
-                                        v-model="patInfo.nurse"
+                                        v-model="patInfo.nurses"
                                         :options="nurses"
                                         mode="tags"
                                         :close-on-select="false"
@@ -182,10 +182,10 @@ export default {
                 email: '',
                 phone: '',
                 reason_of_visiting: '',
-                medication: [],
-                chronic_condition: [],
-                doctor: [],
-                nurse: [],
+                medications: [],
+                chronicConditions: [],
+                doctors: [],
+                nurses: [],
             },
             errors: [],
         }
@@ -248,9 +248,9 @@ export default {
                             this.patInfo.email = ''
                             this.patInfo.phone = ''
                             this.patInfo.reason_of_visiting = ''
-                            this.patInfo.medication = []
-                            this.patInfo.chronic_condition = []
-                            this.patInfo.doctor = []
+                            this.patInfo.medications = []
+                            this.patInfo.chronicConditions = []
+                            this.patInfo.doctors = []
                             this.patInfo.nurses = []
 
                         }
@@ -272,31 +272,31 @@ export default {
 
     async mounted() {
     const response_doctors = await axios.get('/api/doctors/');
-    this.doctors = response_doctors.data.map(doctor => ({
-        value: doctor.id,
-        label: doctor.name
+    this.doctors = response_doctors.data.map(doctors => ({
+        value: doctors.id,
+        label: doctors.name
     }));
 
     const response_nurses = await axios.get('/api/nurses/');
-    this.nurses = response_nurses.data.map(nurse => ({
-        value: nurse.id,
-        label: nurse.name
+    this.nurses = response_nurses.data.map(nurses => ({
+        value: nurses.id,
+        label: nurses.name
     }));
 
 
     const response_conditions = await axios.get('/api/patients/chronic_conditions/');
-    this.chronic_conditions = response_conditions.data.map(chronic_condition => ({
-        value: chronic_condition.id,
-        label: chronic_condition.name
+    this.chronic_conditions = response_conditions.data.map(chronicConditions => ({
+        value: chronicConditions.id,
+        label: chronicConditions.name
     }));
 
     console.log(response_conditions)
 
 
     const response_medications = await axios.get('/api/patients/medications/');
-    this.medications = response_medications.data.map(medication => ({
-        value: medication.id,
-        label: medication.name
+    this.medications = response_medications.data.map(medications => ({
+        value: medications.id,
+        label: medications.name
     }));
 
         console.log(response_medications)
