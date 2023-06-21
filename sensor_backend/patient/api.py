@@ -37,7 +37,7 @@ def chronic_conditions_list(request):
 def add_patient(request):
     print('test', request.user)
 
-    print('request.data:', request.data)
+    print('request.data:', request.data, id)
     form = PatientForm(request.data)
     message = 'success'
     if form.is_valid():

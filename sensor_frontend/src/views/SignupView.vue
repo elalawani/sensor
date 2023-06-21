@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="flex justify-around">
-                        <router-link to="login">Login</router-link>
+                        <router-link to="/login">Login</router-link>
                     </div>
                 </div>
             </div>

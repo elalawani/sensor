@@ -35,10 +35,10 @@
                     <span>
                         patient
                     </span>
-                    <router-link to="all_patients">
+                    <router-link to="/all_patients">
                         search
                     </router-link>
-                    <router-link to="add_patient">
+                    <router-link to="/add_patient">
                         add new patient
                     </router-link>
                 </div>

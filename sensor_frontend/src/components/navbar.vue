@@ -18,7 +18,7 @@
                 <font-awesome-icon icon="fa-solid fa-message"/>
             </i>
             </router-link>
-            <router-link to="all_patients">
+            <router-link to="/all_patients">
                 <i class="p-4 hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-300 rounded-full mx-2">
                 <font-awesome-icon icon="fa-solid fa-search" />
             </i>

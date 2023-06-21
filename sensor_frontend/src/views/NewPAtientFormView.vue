@@ -233,8 +233,8 @@ export default {
 
                             this.toastStore.showToast(
                                 5000,
-                                'registered, please login',
-                                'bg-emerald-400'
+                                'patient added',
+                                'bg-emerald-600'
                             )
 
                             this.patInfo.first_name = ''
@@ -253,13 +253,16 @@ export default {
                             this.patInfo.doctors = []
                             this.patInfo.nurses = []
 
+                            this.$router.push({ name: 'all_patients' })
+
                         }
+
                         else {
                             console.log(response.data)
                             this.toastStore.showToast(
                                 5000,
                                 'please try again',
-                                'bg-red-400'
+                                'bg-red-600'
                             )
                         }
                     })
