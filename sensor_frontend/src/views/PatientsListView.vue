@@ -60,6 +60,6 @@ watch(() => patientStore.patients, (newVal) =>  {
     {
         immediate: true
     })
-patientStore.getPatient()
+patientStore.getPatients()
 
 </script>

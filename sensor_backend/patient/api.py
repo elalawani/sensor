@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 from .serializers import PatientSerializer, MedicationsSerializer, ChronicConditionsSerializer
@@ -13,6 +13,18 @@ def patient_list(request):
     serializer = PatientSerializer(patients, many=True, context={'request': request})
 
     return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+def patient(request, pk):
+    try:
+        patients = Patient.objects.get(pk=pk)
+    except Patient.DoesNotExist:
+        raise Http404
+
+    if request.method == 'GET':
+        serializer = PatientSerializer(patients, context={'request': request})
+        return JsonResponse(serializer.data, safe=False)
 
 
 @api_view(['GET'])

@@ -64,6 +64,7 @@ class Patient(models.Model):
     reason_of_visiting = models.TextField(blank=True)
     chronicConditions = models.ManyToManyField(ChronicCondition, related_name='patients_chronicConditions', blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.first_name
