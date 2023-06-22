@@ -10,4 +10,7 @@ urlpatterns = [
     path('signup/', api.signup, name='signup'),
     path('login/', TokenObtainPairView.as_view(), name='token_obtain'),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('doctors/', api.doctor_list, name='doctor_list'),
+    path('nurses/', api.nurse_list, name='nurse_list'),
+
 ]

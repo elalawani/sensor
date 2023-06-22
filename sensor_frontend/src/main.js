@@ -2,10 +2,16 @@ import './assets/index.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 
 import App from './App.vue'
 import router from './router'
 import axios from "axios";
+
+import Multiselect from '@vueform/multiselect'
+import "@vueform/multiselect/themes/default.css"
+
 
 
 /* import the fontawesome core */
@@ -35,11 +41,16 @@ library.add(
 // 8000 port witch django uses
 axios.defaults.baseURL = 'http://127.0.0.1:8000'
 
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
+
 const app = createApp(App)
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router, axios)
 app.component('font-awesome-icon', FontAwesomeIcon)
+app.component('multi-select', Multiselect)
 
 
 app.mount('#app')

@@ -1,5 +1,5 @@
 <template>
-    <nav class="dark:bg-slate-900 bg-gray-50 flex justify-between fixed z-50 top-0 w-full border-b border-b-sky-800">
+    <nav class="backdrop-blur flex justify-between sticky top-0 z-50 w-full  border-b border-b-sky-800">
         <div class="m-4 flex items-center">
             <router-link to="/">
                 <span class="hover:text-slate-400 text-2xl sm:text-4xl">
@@ -18,7 +18,7 @@
                 <font-awesome-icon icon="fa-solid fa-message"/>
             </i>
             </router-link>
-            <router-link to="/">
+            <router-link to="/all_patients">
                 <i class="p-4 hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-300 rounded-full mx-2">
                 <font-awesome-icon icon="fa-solid fa-search" />
             </i>
@@ -38,12 +38,16 @@
             </a>
             </div>
             <!-- add a dropdown to switch between login logout show profile -->
-            <div v-if="userStore.user.isAuthenticated">
-                <router-link to="/login">
+            <div class="relative" v-if="userStore.user.isAuthenticated">
+                <button @click="toggleList">
                     <i class="py-4 px-[18px] hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-200 rounded-full mx-2">
                         <font-awesome-icon icon="fa-solid fa-user" />
                     </i>
-                </router-link>
+                </button>
+                <div v-if="showList" class="absolute right-3 rounded top-10 flex flex-col bg-slate-700">
+                    <router-link to="/profile" @click="toggleList" class="border-b border-b-gray-300 w-full p-8 ">view Profile</router-link>
+                    <button @click="reloadPage" class="p-8">logout</button>
+                </div>
             </div>
             <div v-else>
                 <div class="flex items-center justify-center space-x-5">
@@ -82,12 +86,20 @@ export default {
     data() {
         return {
             isLight: false,
+            showList: false,
             formState: '',
         }
     },
     methods: {
         toggleTheme() {
             this.isLight = !this.isLight;
+        },
+        toggleList() {
+            this.showList = !this.showList;
+        },
+        reloadPage() {
+            this.userStore.logout()
+            window.location.reload();
         },
         showForm(form) {
       this.formState = form;

@@ -87,6 +87,20 @@ export const useUserStore = defineStore({
                     this.removeToken()
                 })
 
+        },
+        logout() {
+            localStorage.removeItem('user.access');
+            localStorage.removeItem('user.refresh');
+            localStorage.removeItem('user.id');
+            localStorage.removeItem('user.name');
+            localStorage.removeItem('user.email');
+
+            this.isAuthenticated = false;
+            this.id = null;
+            this.name = null;
+            this.email = null;
+            this.access = null;
+            this.refresh = null;
         }
     }
 })

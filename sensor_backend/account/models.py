@@ -28,10 +28,21 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+
+    DOCTOR = 'DR'
+    NURSE = 'NR'
+    STAFF = 'ST'
+    ROLE_CHOICES = [
+        (DOCTOR, 'Doctor'),
+        (NURSE, 'Nurse'),
+        (STAFF, 'Staff'),
+    ]
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=225, blank=True, default='')
     avatar = models.ImageField(upload_to='avatars', blank=True, null=True)
+    role = models.CharField(max_length=2, choices=ROLE_CHOICES, default=STAFF)
 
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
