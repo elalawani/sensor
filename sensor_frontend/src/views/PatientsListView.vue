@@ -16,7 +16,7 @@
   </div>
 
   <div v-for="(patient, index) in patients" :key="index">
-      <router-link :to="`patients/${patient.id}`">
+      <router-link :to="`patients/${patient.id}/info`">
          <div class="items-center m-10 hover:cursor-pointer relative">
              <div class="flex items-center px-2 bg-gray-50 rounded-lg mb-2 relative
                         shadow shadow-slate-400 hover:shadow-lg hover:shadow-gray-200">

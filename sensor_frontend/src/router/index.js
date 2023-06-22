@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 import LoginView from '../views/LoginView.vue';
 import SignupView from '../views/SignupView.vue';
 import DashboardView from '../views/DashboardView.vue';
@@ -10,6 +11,7 @@ import medications from "@/components/medications.vue";
 import sensorData from "@/components/sensorData.vue";
 import conversations from "@/components/conversations.vue";
 import documentations from "@/components/documentations.vue";
+import ProfileView from "@/views/ProfileView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,12 +19,13 @@ const router = createRouter({
         {
             path: '/',
             name: 'dashboard',
-            component: DashboardView
+            component: DashboardView,
+            meta: { requiresAuth: true }
         },
         {
             path: '/login',
             name: 'login',
-            component: LoginView
+            component: LoginView,
         },
         {
             path: '/signup',
@@ -32,17 +35,26 @@ const router = createRouter({
         {
             path: '/all_patients',
             name: 'all_patients',
-            component: PatientsListView
+            component: PatientsListView,
+            meta: { requiresAuth: true }
         },
         {
             path: '/add_patient',
             name: 'add_patient',
-            component: NewPatientFormView
+            component: NewPatientFormView,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: ProfileView,
+            meta: { requiresAuth: true }
         },
         {
             path: '/patients/:id',
             name: 'patients',
             component: PatientsView,
+            meta: { requiresAuth: true },
             children: [
                 {
                     path: '/patients/:id/info',
@@ -72,6 +84,17 @@ const router = createRouter({
             ]
         },
     ]
+})
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+
+  if (requiresAuth && !userStore.user.isAuthenticated) {
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router
