@@ -1,50 +1,63 @@
 <template>
-    <div class="border-t sm:border-t-0 sm:border-r border-t-sky-800 border-r-sky-800 sm:top-[21%]
-  flex sm:flex-col justify-around items-center sm:fixed">
-        <router-link :to="`/patients/${id}/info`" class="relative m-2 sm:m-4 p-3 group">
-          <i class="py-4 px-4 hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-200 rounded-3xl hover:cursor-pointer">
-              <font-awesome-icon icon="fa-solid fa-user" />
-          </i>
-          <span class="absolute w-auto p-3 m-2 min-w-max left-0 bottom-10 rounded-md shadow-2xl text-sky-800 bg-slate-200
-          text-xs font-bold transition-all scale-0  duration-300 ease-linear group-hover:scale-100">
-              PATIENT INFO
-          </span>
-      </router-link>
-      <router-link :to="`/patients/${id}/medications`" class="relative m-2 sm:m-4 p-3 group">
-           <i class="py-4 px-4 hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-200 rounded-3xl hover:cursor-pointer">
+    <div class="border-t sm:border-t-0 sm:border-r border-t-slate-500 border-r-slate-500 sm:top-[21%]
+  flex fixed w-full bottom-0 sm:bottom-1/4 backdrop-blur z-50 sm:flex-col justify-around items-center sm:w-auto">
+        <router-link
+                :to="`/patients/${id}/info`"
+                class="relative m-2 sm:m-4 p-3 group">
+                    <i class="p-3 dark:shadow-none text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 border-4 border-slate-500 hover:border-slate-700 dark:hover:border-slate-300
+            rounded-full hover:cursor-pointer">
+                        <font-awesome-icon icon="fa-solid fa-user" />
+                    </i>
+            <div class="hidden md:flex justify-center">
+                <div class="absolute whitespace-nowrap font-bold top-14 text-xs transition-all scale-0 duration-100 ease-linear group-hover:scale-100">
+                    PATIENT INFO
+                </div>
+            </div>
+
+        </router-link>
+        <router-link :to="`/patients/${id}/medications`" class="relative m-2 sm:m-4 p-3 group">
+           <i class="p-3  text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 border-4 border-slate-500 hover:border-slate-700 dark:hover:border-slate-300
+            rounded-full hover:cursor-pointer ">
               <font-awesome-icon icon="fa-solid fa-stethoscope" />
           </i>
-          <span class="absolute w-auto p-3 m-2 min-w-max left-0 bottom-10 rounded-md shadow-2xl text-sky-800 bg-slate-200
-          text-xs font-bold transition-all scale-0  duration-300 ease-linear group-hover:scale-100">
-              Profile
-          </span>
+           <div class="hidden md:flex justify-center">
+                <div class="absolute whitespace-nowrap font-bold top-14 text-xs transition-all scale-0 duration-100 ease-linear group-hover:scale-100">
+                    PROFILE
+                </div>
+            </div>
       </router-link>
       <router-link :to="`/patients/${id}/sensorData`" class="relative m-2 sm:m-4 p-3 group">
-          <i class="py-4 px-4 hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-200 rounded-3xl hover:cursor-pointer">
-              <font-awesome-icon icon="fa-solid fa-user" />
+          <i class="p-3  text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 border-4 border-slate-500 hover:border-slate-700 dark:hover:border-slate-300
+            rounded-full hover:cursor-pointer ">
+              <font-awesome-icon icon="fa-solid fa-stethoscope" />
           </i>
-          <span class="absolute w-auto p-3 m-2 min-w-max left-0 bottom-10 rounded-md shadow-2xl text-sky-800 bg-slate-200
-          text-xs font-bold transition-all scale-0  duration-300 ease-linear group-hover:scale-100">
-              PATIENT INFO
-          </span>
+          <div class="hidden md:flex justify-center">
+                <div class="absolute whitespace-nowrap font-bold top-14 text-xs transition-all scale-0 duration-100 ease-linear group-hover:scale-100">
+                    PATIENT INFO
+                </div>
+            </div>
       </router-link>
       <router-link :to="`/patients/${id}/conversations`" class="relative m-2 sm:m-4 p-3 group">
-          <i class="py-4 px-4 hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-200 rounded-3xl hover:cursor-pointer">
-              <font-awesome-icon icon="fa-solid fa-user" />
+         <i class="p-3  text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 border-4 border-slate-500 hover:border-slate-700 dark:hover:border-slate-300
+            rounded-full hover:cursor-pointer ">
+              <font-awesome-icon icon="fa-solid fa-stethoscope" />
           </i>
-          <span class="absolute w-auto p-3 m-2 min-w-max left-0 bottom-10 rounded-md shadow-2xl text-sky-800 bg-slate-200
-          text-xs font-bold transition-all scale-0  duration-300 ease-linear group-hover:scale-100">
-              PATIENT INFO
-          </span>
+           <div class="hidden md:flex justify-center">
+                <div class="absolute whitespace-nowrap font-bold top-14 text-xs transition-all scale-0 duration-100 ease-linear group-hover:scale-100">
+                    PATIENT INFO
+                </div>
+            </div>
       </router-link>
         <router-link :to="`/patients/${id}/documentations`" class="relative m-2 sm:m-4 p-3 group">
-          <i class="py-4 px-4 hover:bg-sky-800 hover:text-slate-200 text-sky-800 bg-slate-200 rounded-3xl hover:cursor-pointer">
-              <font-awesome-icon icon="fa-solid fa-user" />
+          <i class="p-3  text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 border-4 border-slate-500 hover:border-slate-700 dark:hover:border-slate-300
+            rounded-full hover:cursor-pointer ">
+              <font-awesome-icon icon="fa-solid fa-stethoscope" />
           </i>
-          <span class="absolute w-auto p-3 m-2 min-w-max left-0 bottom-10 rounded-md shadow-2xl text-sky-800 bg-slate-200
-          text-xs font-bold transition-all scale-0  duration-300 ease-linear group-hover:scale-100">
-              PATIENT INFO
-          </span>
+           <div class="hidden md:flex justify-center">
+                <div class="absolute whitespace-nowrap font-bold top-14 text-xs transition-all scale-0 duration-100 ease-linear group-hover:scale-100">
+                    PATIENT INFO
+                </div>
+            </div>
       </router-link>
   </div>
 </template>
@@ -53,9 +66,15 @@ import {useRoute} from "vue-router";
 
 let id = useRoute().params.id
 </script>
-<style>
+<style scoped>
 .router-link-active i {
-    background: #1b6d85;
-    color: white;
+    color: rgb(203 213 225);
+    border-radius: 50%;
+    border: 4px solid rgb(203 213 225);
+    width: 50%;
+    height: 50%;
+    box-shadow: 0 10px 20px rgb(100 116 139);
+
 }
+
 </style>

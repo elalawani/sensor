@@ -1,0 +1,3 @@
+<template>
+  sensor Data
+</template>

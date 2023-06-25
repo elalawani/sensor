@@ -32,7 +32,6 @@ my patients:
 <script setup>
 import {useUserStore} from "@/stores/user";
 import {usePatientStore} from "@/stores/patient";
-import {computed} from "vue";
 
 const userStore = useUserStore()
 const patientStore = usePatientStore()
