@@ -1,5 +1,7 @@
 from django.http import JsonResponse, Http404
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from django.core.exceptions import PermissionDenied
+from rest_framework.permissions import IsAdminUser
 
 from .serializers import PatientSerializer, MedicationsSerializer, ChronicConditionsSerializer
 from .models import Patient, Medication, ChronicCondition
@@ -8,7 +10,15 @@ from .forms import PatientForm
 
 @api_view(['GET'])
 def patient_list(request):
-    patients = Patient.objects.all()
+    user = request.user
+    if user.role == 'ST':
+        patients = Patient.objects.all()
+    elif user.role == 'DR':
+        patients = Patient.objects.filter(doctors=user)
+    elif user.role == 'NR':
+        patients = Patient.objects.filter(nurses=user)
+    else:
+        raise PermissionDenied("You do not have permission to view patients.")
 
     serializer = PatientSerializer(patients, many=True, context={'request': request})
 
@@ -46,8 +56,8 @@ def chronic_conditions_list(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAdminUser])
 def add_patient(request):
-    print('test', request.user)
 
     print('request.data:', request.data, id)
     form = PatientForm(request.data)

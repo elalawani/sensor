@@ -22,8 +22,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import {
-    faInfo, faArrowRight, faSun, faMoon, faBars, faUser, faHouseChimney, faUsers, faMessage, faStethoscope,
-    faEnvelope, faFemale, faMale, faSearch, faLungs, faTemperatureHalf, faHeartbeat, faDroplet, faPaperPlane,
+    faInfo, faArrowRight, faUser, faHouseChimney, faUsers, faMessage, faStethoscope,
+    faEnvelope, faFemale, faMale, faLungs, faTemperatureHalf, faHeartbeat, faDroplet, faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons'
 import {
     faTwitter, faYoutube, faLinkedin, faGithub
@@ -32,7 +32,7 @@ import {
 
 /* add icons to the library */
 library.add(
-    faSearch, faMoon, faBars, faSun, faArrowRight, faInfo, faUser, faUsers, faLinkedin,
+    faArrowRight, faInfo, faUser, faUsers, faLinkedin,
     faStethoscope, faEnvelope, faMessage, faHouseChimney, faFemale, faMale, faYoutube, faTwitter, faGithub, faLungs,
     faTemperatureHalf, faHeartbeat, faDroplet, faPaperPlane
 )

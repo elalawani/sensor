@@ -2,18 +2,32 @@
     <section>
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
             <div class="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0">
-                <div class="p-6 space-y-4 md:space-y-6 sm:p-8 bg-slate-300 dark:bg-slate-500 rounded-xl">
-                    <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl">
-                        Login
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8 shadow-xl border dark:border-0 dark:bg-slate-700 rounded-xl">
+                    <h1 class="dark:text-slate-100 text-xl font-extrabold leading-tight tracking-tight md:text-2xl">
+                        Sign in
                     </h1>
-                    <form class="space-y-4 md:space-y-6" @submit.prevent="submitform">
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="submitForm">
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium ">email</label>
-                            <input type="email" name="email" v-model="form.email" class="border border-gray-300 sm:text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" placeholder="email" required>
+                            <label for="email" class="block mb-2 text-sm font-medium text-slate-900 dark:text-slate-100">email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                v-model="form.email"
+                                :class="errors.email ? 'border-red-500 dark:border' : ''"
+                                class="border-2 dark:border-0 sm:text-sm rounded-lg focus:border-sky-500 w-full p-2.5 dark:bg-slate-500 dark:text-slate-100 dark:placeholder:text-slate-100"
+                                placeholder="email" >
+                            <span v-if="errors.email" class="ml-4 text-red-500">{{errors.email}}</span>
                         </div>
                         <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" name="password" v-model="form.password" placeholder="password" class="border border-gray-300 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-slate-700 dark:border-slate-600" required="">
+                            <label for="password" class="block mb-2 text-sm font-medium text-slate-900 dark:text-slate-100">Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                v-model="form.password"
+                                :class="errors.email ? 'border-red-500 dark:border' : ''"
+                                placeholder="password"
+                                class="border-2 dark:border-0 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-slate-500 dark:text-slate-100 dark:placeholder:text-slate-100">
+                            <span v-if="errors.password" class="ml-4 text-red-500">{{errors.password}}</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <div class="flex items-start">
@@ -27,7 +41,7 @@
                             <a href="#" class="text-sm font-medium  hover:underline ">Forgot password?</a>
                         </div>
                             <div class="flex justify-around">
-                                    <button type="submit" class="text-gray-50 bg-sky-800 hover:bg-sky-600 rounded-lg text-sm px-14 py-2.5">Sign in</button>
+                                    <button type="submit" class="text-sky-700 hover:text-white border dark:border-0 border-sky-700 dark:text-slate-100 dark:bg-sky-700 hover:bg-sky-700 dark:hover:bg-sky-500 rounded-lg text-sm px-14 py-2.5">Sign in</button>
                             </div>
                     </form>
                     <div v-if="errors.length">
@@ -66,27 +80,26 @@ export default {
                 email: '',
                 password: '',
             },
-            errors: [],
-        }
-    },
-    computed: {
-        signupForm() {
-            return signupForm
+            errors: {
+                email: '',
+                password: '',
+            },
         }
     },
      methods: {
-        async submitform() {
-            this.errors = []
+        async submitForm() {
+            this.errors.email = ''
+            this.errors.password = ''
 
 
             if (this.form.email === ''){
-                this.errors.push('please enter email')
+                 this.errors.email = 'please enter your email'
             }
             if (this.form.password === ''){
-                this.errors.push('please enter password')
+                 this.errors.password = 'please enter password'
             }
 
-            if (this.errors.length === 0) {
+            if (this.errors.password === '' && this.errors.email === '') {
                 await axios
                     .post('/api/login/', this.form)
                     .then(response => {
