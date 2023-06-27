@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import axios from "axios";
-
+import router from '../router'
+import {useToastStore} from "@/stores/toast";
 export const usePatientStore = defineStore({
 
     id: 'patients',
@@ -45,7 +46,10 @@ export const usePatientStore = defineStore({
                     this.patient = response.data
                 })
                 .catch(error => {
-                    console.log('error', error)
+                    console.log('error', error.response.status)
+                    if (error.response && error.response.status === 403) {
+                        router.push({name: 'all_patients'})
+                    }
                 })
         },
 

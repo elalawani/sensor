@@ -152,6 +152,7 @@
 <script>
 import axios from "axios";
 import {useToastStore} from "@/stores/toast";
+import router from "@/router";
 
 export default {
     name: 'signupForm',
@@ -236,7 +237,7 @@ export default {
                             this.patInfo.doctors = []
                             this.patInfo.nurses = []
 
-                            this.$router.push({ name: 'all_patients' })
+                            router.push({ name: 'all_patients' })
 
                         }
 
