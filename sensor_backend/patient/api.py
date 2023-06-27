@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from django.core.exceptions import PermissionDenied
 from rest_framework.permissions import IsAdminUser
 
+from .filters import PatientFilter
 from .serializers import PatientSerializer, MedicationsSerializer, ChronicConditionsSerializer
 from .models import Patient, Medication, ChronicCondition
 from .forms import PatientForm
@@ -12,21 +13,26 @@ from .forms import PatientForm
 def patient_list(request):
     user = request.user
     if user.role == 'ST':
-        patients = Patient.objects.all()
+        patients = Patient.objects.all().distinct()
     elif user.role == 'DR':
-        patients = Patient.objects.filter(doctors=user)
+        patients = Patient.objects.filter(doctors=user).distinct()
     elif user.role == 'NR':
-        patients = Patient.objects.filter(nurses=user)
+        patients = Patient.objects.filter(nurses=user).distinct()
     else:
         raise PermissionDenied("You do not have permission to view patients.")
 
-    serializer = PatientSerializer(patients, many=True, context={'request': request})
+    filtered = PatientFilter(request.GET, queryset=patients)
+
+    serializer = PatientSerializer(filtered.qs, many=True, context={'request': request})
+
+    print(request.GET)
 
     return JsonResponse(serializer.data, safe=False)
 
 
 @api_view(['GET'])
 def patient(request, pk):
+    print(request.data)
     try:
         patients = Patient.objects.get(pk=pk)
     except Patient.DoesNotExist:
@@ -58,7 +64,6 @@ def chronic_conditions_list(request):
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def add_patient(request):
-
     print('request.data:', request.data, id)
     form = PatientForm(request.data)
     message = 'success'

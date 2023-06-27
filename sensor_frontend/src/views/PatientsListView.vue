@@ -9,32 +9,64 @@
                     add new patient
                 </router-link>
         </div>
-        <div class="dark:bg-slate-700 rounded-lg bg-gray-50 border  shadow-inner dark:border-0 dark:shadow-none">
+        <form @keyup.enter.prevent="applyFilter" class="dark:bg-slate-700 rounded-lg bg-gray-50 border  shadow-inner dark:border-0 dark:shadow-none">
             <div class="p-4">
-                <input type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="search name"/>
+                <input v-model="filters.byName" type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="search name"/>
                 <div class="flex flex-row justify-around mb-4">
-                    <input type="date" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="birthdate"/>
-                    <input type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="type"/>
-                    <input type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="type"/>
+                    <input v-model="filters.byBirthdate" type="date" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 border-2 dark:border-0 dark:shadow-none shadow-lg"/>
+                    <select v-model="filters.byType" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg">
+                        <option disabled selected value="">Select Type</option>
+                        <option value="M">male</option>
+                        <option value="F">Female</option>
+                    </select>
+                    <input v-model="filters.byCreator" type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="type"/>
                 </div>
                 <label class="dark:text-slate-100 text-xl">
                     filter by disease or chronic Conditions
                 </label>
 
                 <div class="flex flex-row justify-around my-3">
-                    <input type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="disease"/>
-                    <input type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="condition"/>
+                     <multiselect
+                                        v-model="filters.byMedications"
+                                        :options="medications"
+                                        :close-on-select="true"
+                                        :searchable="true"
+                                        class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg"
+                                        placeholder="Select medication"
+                                    />
+                     <multiselect
+                                        v-model="filters.byCondition"
+                                        :options="chronic_conditions"
+                                        :close-on-select="true"
+                                        :searchable="true"
+                                        class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg"
+                                        placeholder="Select Condition"
+                                    />
                 </div>
                 <label class="dark:text-slate-100 text-xl">
                     filter by doctor or nurse
                 </label>
 
                 <div class="flex flex-row justify-around mt-3">
-                    <input type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="Doctor"/>
-                    <input type="search" class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg" placeholder="nurse"/>
+                    <multiselect
+                                        v-model="filters.byDoctor"
+                                        :options="doctors"
+                                        :close-on-select="true"
+                                        :searchable="true"
+                                        class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg"
+                                        placeholder="Select doctor"
+                                    />
+                     <multiselect
+                                        v-model="filters.byNurse"
+                                        :options="nurses"
+                                        :close-on-select="true"
+                                        :searchable="true"
+                                        class="p-2 pl-3 w-full outline-none dark:bg-slate-500 rounded-lg dark:text-slate-100 mb-2 mr-1 dark:placeholder-slate-100 border-2 dark:border-0 dark:shadow-none shadow-lg"
+                                        placeholder="Select nurse"
+                                    />
                 </div>
             </div>
-        </div>
+        </form>
         <div class="flex justify-between items-center text-slate-50 mx-2 my-4">
             <div class="w-fit font-bold sm:rounded-2xl rounded-full p-2 bg-sky-700 dark:bg-sky-900 justify-items-end hidden sm:inline">
                 <router-link to="/add_patient">
@@ -43,19 +75,20 @@
                 </router-link>
             </div>
             <div class="flex space-x-4 justify-end">
-                <button class="flex dark:bg-slate-700 bg-slate-500 p-2 rounded-2xl px-4">
+                <button @click="applyFilter" class="flex dark:bg-slate-700 bg-slate-500 p-2 rounded-2xl px-4">
                     <span class="mr-1">filter</span> <search/>
                 </button>
-                <button class="flex dark:bg-slate-700 bg-slate-500 p-2 rounded-2xl px-2">
+                <button @click="removeFilter" class="flex dark:bg-slate-700 bg-slate-500 p-2 rounded-2xl px-2">
                     <span class="mr-1">refresh</span> <search/>
                 </button>
             </div>
         </div>
 
     </div>
+
     <div
         class="flex w-full flex-row items-center mt-10"
-        v-for="(patient, index) in patientStore.patients"
+        v-for="(patient, index) in patients"
         :key="index"
     >
         <div class="flex w-full flex-row sm:space-x-10 pr-4">
@@ -82,7 +115,7 @@
                         FEMALE
                     </div>
                     <div>
-                        date of creation: {{patient.created_at}}
+                        date of creation
                     </div>
                     <div class="text-sky-500 hover:text-sky-300 hover:dark:text-sky-500 dark:text-sky-700 flex flex-row m-4 mb-0">
                         <router-link :to="`patients/${patient.id}/info`">
@@ -123,42 +156,156 @@
                 </div>
             </div>
         </div>
-     <!--
-       <router-link :to="`patients/${patient.id}/info`">
-            <div class="items-center m-6 hover:cursor-pointer relative">
-                <div class="flex items-center px-2 hover:dark:bg-slate-800 rounded-lg mb-2 relative
-                        shadow hover:shadow-lg flex-col-reverse hover:bg-slate-100 p-6">
-
-                    <div class="text-slate-900 dark:text-slate-100 p-8">
-                        <strong>{{patient.first_name}} {{patient.last_name}}</strong><br>
-                        <span class="text-gray-400">{{patient.date_of_birth}}</span>
-                        <div v-for="doctor in patient.doctors">{{doctor.name}}</div>
-                        <div v-for="nurse in patient.nurses">{{nurse.name}}</div>
-                    </div>
-                    <div class="bg-sky-800 absolute px-3 py-1 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                        <font-awesome-icon icon="fa-solid fa-arrow-right" />
-                    </div>
-                </div>
-            </div>
-        </router-link>-->
     </div>
 </template>
-<script setup>
+<script>
 
-import { usePatientStore } from '@/stores/patient'
-import {watch} from "vue";
 import Search from "@/components/svgs/search.vue";
+import {usePatientStore} from "@/stores/patient";
+import {computed, onMounted, ref} from "vue";
+import axios from "axios";
+import Multiselect from "@vueform/multiselect";
 
-const patientStore = usePatientStore()
+export default {
+    name: 'PatientListView',
+    setup() {
+        const patientStore = usePatientStore()
 
-let patients = patientStore.patients
+        const filters = ref({
+            byName: '',
+            byBirthdate: '',
+            byType: '',
+            byCreator: '',
+            byMedications: '',
+            byCondition: '',
+            byDoctor: '',
+            byNurse: '',
+        })
 
-watch(() => patientStore.patients, (newVal) =>  {
-        patients = newVal
+        const applyFilter = async () => {
+            patientStore.updateFilters(filters.value);
+            await patientStore.getPatients();
+        };
+
+        const removeFilter = async () => {
+            filters.value = {
+                byName: '',
+                byBirthdate: '',
+                byType: '',
+                byCreator: '',
+                byMedications: '',
+                byCondition: '',
+                byDoctor: '',
+                byNurse: '',
+            }
+            patientStore.updateFilters(filters.value);
+            await patientStore.getPatients();
+            window.location.reload()
+        };
+
+        onMounted(() => {
+            patientStore.getPatients()
+        })
+
+        const patients = computed(() => patientStore.patients)
+
+        return {
+            patients,
+            filters,
+            applyFilter,
+            removeFilter
+        }
     },
-    {
-        immediate: true
-    })
-patientStore.getPatients()
+    components: {Multiselect, Search},
+    data() {
+        return {
+            doctors: [],
+            selectedDoctor: null,
+            nurses: [],
+            selectedNurse: null,
+            medications: [],
+            selectedMedication: null,
+            chronic_conditions: [],
+            selectedCondition: null,
+        }
+    },
+
+     async mounted() {
+    const response_doctors = await axios.get('/api/doctors/');
+    this.doctors = response_doctors.data.map(doctors => ({
+        value: doctors.name,
+        label: doctors.name
+    }));
+
+    const response_nurses = await axios.get('/api/nurses/');
+    this.nurses = response_nurses.data.map(nurses => ({
+        value: nurses.name,
+        label: nurses.name
+    }));
+
+
+    const response_conditions = await axios.get('/api/patients/chronic_conditions/');
+    this.chronic_conditions = response_conditions.data.map(chronicConditions => ({
+        value: chronicConditions.name,
+        label: chronicConditions.name
+    }));
+
+    console.log(response_conditions)
+
+
+    const response_medications = await axios.get('/api/patients/medications/');
+    this.medications = response_medications.data.map(medications => ({
+        value: medications.name,
+        label: medications.name
+    }));
+
+         console.log(response_medications)
+         await this.$nextTick(() => {
+             const elements1 = document.querySelectorAll('.multiselect-search');
+             const elements2 = document.querySelectorAll('.multiselect-dropdown');
+             const elements3 = document.querySelectorAll('.multiselect-option.is-selected');
+             elements1.forEach((element) => {
+                 element.style.backgroundColor = "#333";
+                 element.style.color = "#f5f5f5";
+             });
+             elements2.forEach((element) => {
+                 element.style.backgroundColor = "#333";
+                 element.style.color = "#f5f5f5";
+             });
+             elements3.forEach((element) => {
+                 element.style.backgroundColor = "#333";
+                 element.style.color = "#f5f5f5";
+             });
+         });
+
+  },
+}
+
 
 </script>
+<style>
+.parent >>> .child {
+
+.multiselect-search {
+    background: red !important;
+}
+    .multiselect__dropdown {
+  background-color: red;
+}
+
+/* Changing the font color and size of the selected item */
+.multiselect__single {
+  color: #333;
+  font-size: 16px;
+}
+
+/* Changing the color of the tags */
+.multiselect__tag {
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+
+
+}
+</style>

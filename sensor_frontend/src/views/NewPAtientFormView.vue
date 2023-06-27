@@ -5,7 +5,7 @@
         <div class="flex flex-col items-center justify-center px-6 py-10 mx-auto h-screen lg:py-0">
             <div class="w-full rounded-lg md:mt-0 sm:max-w-screen-sm xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8 bg-slate-300 dark:bg-slate-500 rounded-xl">
-                    <form method="post" class="space-y-4 md:space-y-6" @submit.prevent="submitform">
+                    <form method="post" class="space-y-4 md:space-y-6" @submit.prevent="submitForm">
                         <div v-if="step === 1">
                             <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl mb-6">
                                 personal information
@@ -201,24 +201,7 @@ export default {
                 this.step -= 1;
             }
         },
-        submitform() {
-         /*   this.errors = []
-
-            if (this.form.email === ''){
-                this.errors.push('please enter email')
-            }
-
-            if (this.form.name === ''){
-                this.errors.push('please enter name')
-            }
-            if (this.form.password1 === ''){
-                this.errors.push('please enter password')
-            }
-
-            if (this.form.password1 !== this.form.password2){
-                this.errors.push('no match found')
-            }
-*/
+        submitForm() {
 
             console.log(this.doctors)
                 axios
