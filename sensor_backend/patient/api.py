@@ -32,14 +32,25 @@ def patient_list(request):
 
 @api_view(['GET'])
 def patient(request, pk):
-    print(request.data)
+    user = request.user
     try:
-        patients = Patient.objects.get(pk=pk)
+        patient_info = Patient.objects.get(pk=pk)
     except Patient.DoesNotExist:
-        raise Http404
+        raise Http404("Patient does not exist.")
+
+    if user.role == 'ST':
+        pass
+    elif user.role == 'DR':
+        if not Patient.objects.filter(doctors=user, pk=pk).exists():
+            raise PermissionDenied("You do not have permission to view patients.")
+    elif user.role == 'NR':
+        if not Patient.objects.filter(nurses=user, pk=pk).exists():
+            raise PermissionDenied("You do not have permission to view patients.")
+    else:
+        raise PermissionDenied("You do not have permission to view patients.")
 
     if request.method == 'GET':
-        serializer = PatientSerializer(patients, context={'request': request})
+        serializer = PatientSerializer(patient_info, context={'request': request})
         return JsonResponse(serializer.data, safe=False)
 
 

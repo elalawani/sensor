@@ -62,6 +62,7 @@
 </template>
 <script>
 import axios from "axios";
+import router from "@/router";
 import {useUserStore} from "@/stores/user";
 
 export default {
@@ -116,7 +117,7 @@ export default {
                     .get('/api/me/')
                     .then(response => {
                         this.userStore.setUserInfo(response.data)
-                        this.$router.push('/')
+                        router.push('/')
                     })
                     .catch(error => {
                         console.log('error',error)
