@@ -1,54 +1,34 @@
-<template class="border-b">
-    <div class="flex flex-row h-full justify-around">
-        <div class="left flex flex-col justify-center items-center border-r border-r-slate-500 w-full p-2">
-            <div class="text-slate-700 dark:text-slate-100 font-bold p-4 w-full">patient: {{patient[0].firstName}}</div>
-            <div class="flex flex-row p-2 justify-around items-center w-full ">
-                <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
-                justify-center p-2 rounded-br-lg w-full m-1 dark:bg-slate-500">
-                    <div class="w-full text-xl font-extrabold px-4 py-2">
-                       <span>
-                            37.3 °C
-                       </span>
-                        <i class="dark:text-sky-900 text-sky-700 px-3">
-                            <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
-                        </i>
-                    </div>
-                    <div class="w-fit font-bold my-2">
-                        Körper Temperature
-                    </div>
-                    <div class="font-extralight w-full text-xs">
-                            am 12.12.2023
-                    </div>
-                     <i class="dark:bg-sky-900 bg-sky-700 absolute px-3 py-1 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                      <font-awesome-icon icon="fa-solid fa-info" />
-                  </i>
-                </div>
-            <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
-                justify-center p-2 rounded-br-lg w-full m-1 dark:bg-slate-500">
-                    <div class="w-full text-xl font-extrabold px-4 py-2">
-                       <span>
-                            37.3 °C
-                       </span>
-                        <i class="dark:text-sky-900 text-sky-700 px-3">
-                            <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
-                        </i>
-                    </div>
-                    <div class="w-fit font-bold my-2">
-                        Körper Temperature
-                    </div>
-                    <div class="font-extralight w-full text-xs">
-                            am 12.12.2023
-                    </div>
-                     <i class="dark:bg-sky-900 bg-sky-700 absolute px-3 py-1 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                      <font-awesome-icon icon="fa-solid fa-info" />
-                  </i>
-                </div>
-            </div>
-            <div class="w-full">
-                <div class="m-2 text-slate-900 dark:text-slate-100">
-                last measurement of: <span class="text-sky-700 border-b">name of clicked one</span>
-                </div>
-                <div class="w-full">
+<template>
+    <div class="flex flex-row">
+        <div class="left flex flex-col items-center border-r border-r-slate-500 w-full p-2">
+            <div class="flex flex-col w-[80%]">
+               <div class="flex flex-row border-b items-center border-b-slate-500 w-full">
+                    <button
+                        class="border-r border-r-slate-500 text-slate-500 overflow-hidden
+                        flex flex-col items-center justify-center p-2 w-full m-1 hover:font-bold"
+                        @click="showChart"
+                        :class="dataView === 'chart' ? 'font-extrabold dark:text-white ' : ''"
+                >
+                    Chart
+                </button>
+                <button
+                        class="text-slate-500 overflow-hidden
+                        flex flex-col items-center justify-center p-2 w-full m-1 hover:font-bold"
+                        @click="showTable"
+                        :class="dataView === 'table' ? 'font-extrabold dark:text-white' : ''"
+                >
+                    table
+                </button>
+               </div>
+                <div  class="h-full justify-center shadow dark:bg-slate-800 mt-1">
+                <Line
+                    v-if="dataView === 'chart'"
+                    :data="chartData"
+                    :options="chartOptions"
+                />
+                <div
+                    v-else-if="dataView === 'table'"
+                    class="w-full">
                     <div class="shadow-md rounded-lg">
                         <table class="rounded text-sm text-left text-slate-500 dark:text-slate-100 w-full">
                             <thead class="text-slate-100 bg-sky-700 uppercase dark:bg-sky-900 dark:text-slate-300">
@@ -117,144 +97,193 @@
 
                 </div>
             </div>
+            </div>
+            <div v-if="dataView === 'chart'">
+                <div class="font-bold px-3 dark:text-slate-100 text-slate-700">
+                    comments
+                </div>
+                <div class="max-h-40 rounded shadow-xl border dark:border-none overflow-auto dark:bg-slate-600">
+                <div class="flex flex-col  rounded-tl-xl rounded-tr-xl rounded-br-xl dark:bg-slate-500 bg-sky-700 w-fit text-slate-100 p-2 my-2 mx-6">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, et!
+                </div>
+                <div class="flex flex-col rounded-tl-xl rounded-tr-xl rounded-br-xl dark:bg-slate-500 bg-sky-700 w-fit text-slate-100 p-2 my-2 mx-6">
+                    Lorem ipsum, et!
+                </div>
+                    <div class="flex flex-col  rounded-tl-xl rounded-tr-xl rounded-br-xl dark:bg-slate-500 bg-sky-700 w-fit text-slate-100 p-2 my-2 mx-6">
+                    Lorem ipsum, et!
+                </div>
+                    <div class="flex flex-col  rounded-tl-xl rounded-tr-xl rounded-br-xl dark:bg-slate-500 bg-sky-700 w-fit text-slate-100 p-2 my-2 mx-6">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, et!
+                </div>
+                </div>
+                <div class="flex flex-row justify-around items-center p-2 w-full dark:bg-slate-600 bg-gray-50 shadow-xl rounded-xl mt-2 py-4 sticky b-0">
+                    <input type="text" class="shadow-xl w-full p-2 rounded-lg mx-2 dark:bg-slate-500 dark:text-slate-100 text-slate-900" placeholder="add Comment"/>
+                    <button class="px-3 py-2 rounded-full dark:bg-sky-900 text-slate-100 dark:hover:bg-sky-700
+                    bg-sky-700 hover:bg-sky-600"
+                    >
+                        comment
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="right flex flex-col w-full p-2">
-            <div class="flex flex-row justify-around items-center w-full h-full">
+        <div class=" flex flex-col w-1/2 p-2">
+            <div class="max-h-[65%] overflow-auto">
                 <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
-                            justify-center p-1 rounded-tl-xl rounded-br-lg w-full h-fit  m-1 dark:bg-slate-500">
-                    <div class="w-full font-extrabold px-2 py-1">
-                        <span>
-                            37.3 °C
-                        </span>
-                        <i class="dark:text-sky-900 text-sky-700 px-2">
-                            <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
-                        </i>
-                    </div>
-                    <div class="w-full">
-                        Körper Temperature
-                    </div>
-                    <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                        <font-awesome-icon icon="fa-solid fa-info" />
+                            justify-center p-1 rounded-xl w-full my-1 dark:bg-slate-500">
+                <div class="w-full font-extrabold px-2 py-1">
+                    <span>
+                        37.3 °C
+                    </span>
+                    <i class="dark:text-sky-900 text-sky-700 px-2">
+                        <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
                     </i>
                 </div>
-                 <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
-                            justify-center p-1 rounded-tl-xl rounded-br-lg w-full h-fit  m-1 dark:bg-slate-500">
-                    <div class="w-full font-extrabold px-2 py-1">
-                        <span>
-                            37.3 °C
-                        </span>
-                        <i class="dark:text-sky-900 text-sky-700 px-2">
-                            <font-awesome-icon size="xl" icon="fa-solid fa-heartbeat" />
-                        </i>
-                    </div>
-                    <div class="w-full">
-                        hertz rate
-                    </div>
-                    <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                        <font-awesome-icon icon="fa-solid fa-info" />
+                <div class="w-full">
+                    Körper Temperature
+                </div>
+                <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
+                    <font-awesome-icon icon="fa-solid fa-info" />
+                </i>
+            </div><div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
+                            justify-center p-1 rounded-xl w-full my-1 dark:bg-slate-500">
+                <div class="w-full font-extrabold px-2 py-1">
+                    <span>
+                        37.3 °C
+                    </span>
+                    <i class="dark:text-sky-900 text-sky-700 px-2">
+                        <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
                     </i>
                 </div>
-
-
+                <div class="w-full">
+                    Körper Temperature
+                </div>
+                <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
+                    <font-awesome-icon icon="fa-solid fa-info" />
+                </i>
+            </div><div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
+                            justify-center p-1 rounded-xl w-full my-1 dark:bg-slate-500">
+                <div class="w-full font-extrabold px-2 py-1">
+                    <span>
+                        37.3 °C
+                    </span>
+                    <i class="dark:text-sky-900 text-sky-700 px-2">
+                        <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
+                    </i>
+                </div>
+                <div class="w-full">
+                    Körper Temperature
+                </div>
+                <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
+                    <font-awesome-icon icon="fa-solid fa-info" />
+                </i>
+            </div><div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
+                            justify-center p-1 rounded-xl w-full my-1 dark:bg-slate-500">
+                <div class="w-full font-extrabold px-2 py-1">
+                    <span>
+                        37.3 °C
+                    </span>
+                    <i class="dark:text-sky-900 text-sky-700 px-2">
+                        <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
+                    </i>
+                </div>
+                <div class="w-full">
+                    Körper Temperature
+                </div>
+                <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
+                    <font-awesome-icon icon="fa-solid fa-info" />
+                </i>
             </div>
-           <div class="flex flex-row justify-around items-center w-full h-full">
                 <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
-                            justify-center p-2 rounded-tl-xl rounded-br-lg w-full h-fit m-1 dark:bg-slate-500">
-                    <div class="w-full font-extrabold px-2 py-1">
-                        <span>
-                            37.3 °C
-                        </span>
-                        <i class="dark:text-sky-900 text-sky-700 px-2">
-                            <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
-                        </i>
-                    </div>
-                    <div class="w-full">
-                        Körper Temperature
-                    </div>
-                    <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                        <font-awesome-icon icon="fa-solid fa-info" />
+                            justify-center p-1 rounded-xl w-full my-1 dark:bg-slate-500">
+                <div class="w-full font-extrabold px-2 py-1">
+                    <span>
+                        37.3 °C
+                    </span>
+                    <i class="dark:text-sky-900 text-sky-700 px-2">
+                        <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
                     </i>
                 </div>
-                 <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
-                            justify-center p-2 rounded-tl-xl rounded-br-lg w-full h-fit m-1 dark:bg-slate-500">
-                    <div class="w-full font-extrabold px-2 py-1">
-                        <span>
-                            37.3 °C
-                        </span>
-                        <i class="dark:text-sky-900 text-sky-700 px-2">
-                            <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
-                        </i>
-                    </div>
-                    <div class="w-full">
-                        Körper Temperature
-                    </div>
-                    <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                        <font-awesome-icon icon="fa-solid fa-info" />
+                <div class="w-full">
+                    Körper Temperature
+                </div>
+                <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
+                    <font-awesome-icon icon="fa-solid fa-info" />
+                </i>
+            </div>
+            <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
+                            justify-center p-1 rounded-xl w-full my-1 dark:bg-slate-500">
+                <div class="w-full font-extrabold px-2 py-1">
+                    <span>
+                        37.3 °C
+                    </span>
+                    <i class="dark:text-sky-900 text-sky-700 px-2">
+                        <font-awesome-icon size="xl" icon="fa-solid fa-heartbeat" />
                     </i>
                 </div>
+                <div class="w-full">
+                    hertz rate
+                </div>
+                <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
+                    <font-awesome-icon icon="fa-solid fa-info" />
+                </i>
+            </div>
+            <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
+                            justify-center p-2 rounded-xl w-full my-1 dark:bg-slate-500">
+                <div class="w-full font-extrabold px-2 py-1">
+                    <span>
+                        37.3 °C
+                    </span>
+                    <i class="dark:text-sky-900 text-sky-700 px-2">
+                        <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
+                    </i>
+                </div>
+                <div class="w-full">
+                    Körper Temperature
+                </div>
+                <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
+                    <font-awesome-icon icon="fa-solid fa-info" />
+                </i>
+            </div>
+            <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
+                            justify-center p-2 rounded-xl w-full my-1 dark:bg-slate-500">
+                <div class="w-full font-extrabold px-2 py-1">
+                    <span>
+                        37.3 °C
+                    </span>
+                    <i class="dark:text-sky-900 text-sky-700 px-2">
+                        <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
+                    </i>
+                </div>
+                <div class="w-full">
+                    Körper Temperature
+                </div>
+                <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
+                    <font-awesome-icon icon="fa-solid fa-info" />
+                </i>
+            </div>
+            </div>
+
+            <div class="absolute bottom-0 flex flex-col">
+                <button class="p-2 w-full bg-sky-700 rounded">add data +</button>
+                <label class=" text-sm font-medium text-gray-900 dark:text-white" for="file_input">or Upload FHIR</label>
+                <input class=" text-sm text-slate-700 border border-slate-500 rounded-lg cursor-pointer bg-gray-50 dark:text-slate-300 focus:outline-none dark:bg-slate-500 dark:border-slate-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
 
 
             </div>
-            <div class="flex flex-row justify-around items-center w-full h-full">
-                <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
-                            justify-center p-2 rounded-tl-xl rounded-br-lg w-full h-fit m-1 dark:bg-slate-500">
-                    <div class="w-full font-extrabold px-2 py-1">
-                        <span>
-                            37.3 °C
-                        </span>
-                        <i class="dark:text-sky-900 text-sky-700 px-2">
-                            <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
-                        </i>
-                    </div>
-                    <div class="w-full">
-                        Körper Temperature
-                    </div>
-                    <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                        <font-awesome-icon icon="fa-solid fa-info" />
-                    </i>
-                </div>
-                 <div class="relative text-slate-700 dark:text-slate-100 overflow-hidden shadow-lg flex flex-col items-center
-                            justify-center p-2 rounded-tl-xl rounded-br-lg w-full h-fit m-1 dark:bg-slate-500">
-                    <div class="w-full font-extrabold px-2 py-1">
-                        <span>
-                            37.3 °C
-                        </span>
-                        <i class="dark:text-sky-900 text-sky-700 px-2">
-                            <font-awesome-icon size="xl" icon="fa-solid fa-temperature-half" />
-                        </i>
-                    </div>
-                    <div class="w-full">
-                        Körper Temperature
-                    </div>
-                     <i class="dark:bg-sky-900 bg-sky-700 absolute px-2 bottom-[-1px] right-[-1px] text-gray-50 rounded-br-lg rounded-tl-lg">
-                         <font-awesome-icon icon="fa-solid fa-info" />
-                     </i>
-                 </div>
-
-
-            </div>
-            <div>
-                <bar
-                    id="my-chart-id"
-                    :options="chartOptions"
-                    :data="chartData"
-                    class="p-5 h-full"
-                />
-            </div>
-
         </div>
     </div>
 </template>
 <script>
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { Line } from 'vue-chartjs'
+import {Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement} from 'chart.js'
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+ChartJS.register(Title,Legend, Tooltip, LineElement, PointElement, CategoryScale, LinearScale)
 
 
 export default {
     data() {
         return {
+            dataView: 'chart',
             patient: [{
                 'id': 1,
                 'firstName': 'Alice',
@@ -288,17 +317,30 @@ export default {
                 "surgeries": []
             }
             ],
-             chartData: {
-        labels: [ 'January', 'February', 'March' ],
-        datasets: [ { data: [40, 20, 12] } ]
-      },
-      chartOptions: {
-        responsive: true
-      }
+            chartData: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Data One',
+                    backgroundColor: '#0369a1',
+                    data: [40, 39, 10, 40, 39, 80, 40],
+                }],
+
+            },
+            chartOptions: {
+                responsive: true,
+            }
         }
     },
     components: {
-        Bar,
+        Line,
+    },
+    methods: {
+        showTable() {
+            this.dataView = 'table';
+        },
+        showChart() {
+            this.dataView = 'chart';
+        },
     }
 }
 

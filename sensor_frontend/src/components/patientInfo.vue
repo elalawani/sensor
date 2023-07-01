@@ -1,6 +1,6 @@
 <template>
-    <span class="hidden sm:inline">
-        <div class="grid grid-cols-2 text-slate-700 sm:mr-5 dark:text-slate-100">
+    <div class="hidden sm:inline">
+        <div class="grid grid-cols-2 items-center sm:mt-8 text-slate-700 sm:mr-5 dark:text-slate-100">
             <div class="flex col-span-1 border-r border-r-slate-300 items-center text-center flex-col px-2 py-5">
                 <i class="px-6 py-5 border-slate-500 text-slate-500 dark:text-slate-100 rounded-full border mb-5">
                     <font-awesome-icon size="4x" icon="fa-solid fa-user" />
@@ -67,8 +67,7 @@
 
       </div>
   </div>
-
-    </span>
+    </div>
     <div class="inline sm:hidden">
         <patient-info-mobile/>
     </div>
