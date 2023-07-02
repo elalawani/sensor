@@ -9,7 +9,7 @@
 
 </template>
 <script>
-import navbar from "../src/components/navbar.vue"
+import navbar from "./components/bars/navbar.vue"
 import toast from '../src/components/toast.vue'
 import {useUserStore} from "@/stores/user";
 import axios from "axios";
