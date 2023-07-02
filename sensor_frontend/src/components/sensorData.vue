@@ -297,40 +297,7 @@ export default {
     data() {
         return {
             dataView: 'chart',
-            id: '',
-            patient: [{
-                'id': 1,
-                'firstName': 'Alice',
-                'lastName': "Smith",
-                'gender': 'Female',
-                'dateOfBirth': '1990-03-12',
-                'address': {
-                    "street": "456 Elm St",
-                    "city": "Los Angeles",
-                    "state": "CA",
-                    "zipcode": "90001"
-                },
-                "contact": {
-                    "email": "alice.smith@example.com",
-                    "phone": "+1 (555) 987-6543"
-                },
-                "medicalHistory": {
-                    "allergies": ["Dust", "Pollen"]
-                },
-                'measurements': {
-                    'heart_rate': '80.20 pbh',
-                    'blood_pressure': '120 mmHg',
-                    'blood_glucose': '120 mg/dL',
-                    'Respiration_rate': '15bpm',
-                    'Temperature': '37 °C',
-                    'sleep': '6 hr',
-                    'blood_cholesterol': '210 mg/dL',
-                },
-                "chronicConditions": ["Asthma"],
-                "medications": ["Albuterol"],
-                "surgeries": []
-            }
-            ],
+            id: useRoute().params.id,
             chartData: {
                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
                 datasets: [{
@@ -347,9 +314,6 @@ export default {
     },
     components: {
         Line,
-    },
-    mounted() {
-      this.id = useRoute().params.id
     },
     methods: {
         showTable() {
