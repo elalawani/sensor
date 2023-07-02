@@ -1,10 +1,10 @@
 <template>
-  <div class="mt-16 mx-2 flex flex-col-reverse sm:flex-row">
+  <div class="mt-8 mx-2 flex flex-col-reverse sm:flex-row">
       <div>
           <side-bar/>
       </div>
       <div class="sm:ml-36 border shadow-xl dark:border-none dark:bg-slate-700 text-slate-100 rounded sm:mr-5
-      sm:w-4/5 w-full sm:fixed h-4/6 overflow-auto mb-16 sm:mb-0">
+      sm:w-4/5 w-full sm:fixed h-5/6 overflow-auto mb-16 sm:mb-0">
           <router-view></router-view>
       </div>
 

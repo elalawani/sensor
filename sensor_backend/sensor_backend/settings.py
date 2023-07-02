@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     # my Apps
     'account',
     'patient',
+    'sensor',
 ]
 
 MIDDLEWARE = [
