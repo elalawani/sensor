@@ -12,6 +12,7 @@ import sensorData from "@/components/sensorData.vue";
 import conversations from "@/components/conversations.vue";
 import documentations from "@/components/documentations.vue";
 import ProfileView from "@/views/ProfileView.vue";
+import NewDataFormView from "@/views/NewDataFormView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -80,6 +81,12 @@ const router = createRouter({
                     path: '/patients/:id/documentations',
                     name: 'documentations',
                     component: documentations
+                },
+                {
+                    path: '/patients/:id/add_data',
+                    name: 'add_data',
+                    component: NewDataFormView,
+                    meta: { requiresAuth: true }
                 },
             ]
         },

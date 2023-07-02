@@ -18,7 +18,7 @@ class Measurement(models.Model):
 
 class HeartRateMeasurement(Measurement):
     HeartRate = models.FloatField(null=True, blank=True)
-    unit = models.CharField(max_length=30, default='mg/dL')
+    unit = models.CharField(max_length=30, default='bpm')
 
 
 class HeartRateMeasurementComments(models.Model):
@@ -31,7 +31,7 @@ class HeartRateMeasurementComments(models.Model):
 class BloodPressureMeasurement(Measurement):
     systolic_Pressure = models.FloatField(null=True, blank=True)
     diastolic_Pressure = models.FloatField(null=True, blank=True)
-    unit = models.CharField(max_length=30, default='mg/dL')
+    unit = models.CharField(max_length=30, default='mmHg')
 
 
 class BloodPressureMeasurementComments(models.Model):
@@ -55,7 +55,7 @@ class BloodGlucoseMeasurementComments(models.Model):
 
 class RespirationRateMeasurement(Measurement):
     RespirationRate = models.FloatField(null=True, blank=True)
-    unit = models.CharField(max_length=30, default='mg/dL')
+    unit = models.CharField(max_length=30, default='breaths per minute')
 
 
 class RespirationRateMeasurementComments(models.Model):
@@ -67,7 +67,7 @@ class RespirationRateMeasurementComments(models.Model):
 
 class TemperatureMeasurement(Measurement):
     Temperature = models.FloatField(null=True, blank=True)
-    unit = models.CharField(max_length=30, default='mg/dL')
+    unit = models.CharField(max_length=30, default='°C')
 
 
 class TemperatureMeasurementComments(models.Model):
