@@ -13,7 +13,7 @@
 <script>
 import { usePatientStore } from '@/stores/patient'
 import {useRoute} from "vue-router";
-import sideBar from '@/components/sideBar.vue'
+import sideBar from '@/components/bars/sideBar.vue'
 import {computed} from "vue";
 
 

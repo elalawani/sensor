@@ -6,11 +6,11 @@ import DashboardView from '../views/DashboardView.vue';
 import PatientsListView from "@/views/PatientsListView.vue";
 import PatientsView from "@/views/PatientView.vue";
 import NewPatientFormView from "@/views/NewPAtientFormView.vue";
-import patientInfo from "@/components/patientInfo.vue";
-import medications from "@/components/medications.vue";
-import sensorData from "@/components/sensorData.vue";
-import conversations from "@/components/conversations.vue";
-import documentations from "@/components/documentations.vue";
+import patientInfo from "@/components/patientView/patientInfo.vue";
+import medications from "@/components/patientView/medications.vue";
+import sensorData from "@/components/patientView/sensorData.vue";
+import conversations from "@/components/patientView/conversations.vue";
+import documentations from "@/components/patientView/documentations.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import NewDataFormView from "@/views/NewDataFormView.vue";
 
