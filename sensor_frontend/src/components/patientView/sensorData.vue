@@ -372,12 +372,10 @@
                 </div>
                 <div class="flex flex-row border-t border-t-slate-500 justify-around items-center p-2 w-full dark:bg-slate-600 bg-gray-50 mt-1 py-4 sticky bottom-0 px-3 backdrop-blur">
                     <input
-                        v-model="comment.text"
                         type="text"
                         class="shadow-xl w-full p-2 rounded-lg mx-2 dark:bg-slate-500 dark:text-slate-100 text-slate-900"
                         placeholder="add Comment"/>
                     <button
-                        @click="submitComment"
                         class="px-3 py-2 rounded-full dark:bg-sky-900 text-slate-100 dark:hover:bg-sky-700
                     bg-sky-700 hover:bg-sky-600"
                     >
@@ -766,10 +764,6 @@ export default {
     },
     data() {
         return {
-            comment: {
-                text: '',
-                measurement: '',
-            },
             dataView: 'chart',
             currentTableView: '',
             id: useRoute().params.id,
@@ -779,17 +773,6 @@ export default {
         }
     },
     methods: {
-        submitComment() {
-            console.log(this.text)
-            axios.post('/api/sensor/parkinson_comment/', this.comment)
-                .then(response => {
-                    console.log(response.data)
-                    this.text=''
-                })
-                .catch(error => {
-                    console.log('error', error)
-                })
-        },
         showTable() {
             this.dataView = 'table';
         },

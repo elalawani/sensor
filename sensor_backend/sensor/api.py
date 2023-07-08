@@ -109,7 +109,6 @@ def get_temperature(request, patient_id):
     except TemperatureMeasurement.DoesNotExist:
         raise Http404("measurements does not exist.")
     serializer = TemperatureMeasurementSerializer(measurements, many=True)
-    print(serializer.data)
     return Response(serializer.data)
 
 
@@ -141,11 +140,14 @@ def post_parkinson(request):
         if serializer.is_valid():
             serializer.save(created_by=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.data)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
 def get_parkinson(request, patient_id):
+    print(patient_id)
     try:
         measurements = ParkinsonsMeasurement.objects.filter(patient_id=patient_id)
     except ParkinsonsMeasurement.DoesNotExist:
@@ -153,18 +155,3 @@ def get_parkinson(request, patient_id):
     serializer = ParkinsonsMeasurementSerializer(measurements, many=True)
     print(serializer.data)
     return Response(serializer.data)
-
-
-@api_view(['POST', 'GET'])
-def parkinson_comments(request):
-    if request.method == 'POST':
-        serializer = ParkinsonsMeasurementCommentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(created_by=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'GET':
-        parkinson = ParkinsonsMeasurementComments.objects.all()
-        serializer = ParkinsonsMeasurementCommentSerializer(parkinson, many=True)
-        return Response(serializer.data)
-3

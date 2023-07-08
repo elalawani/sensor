@@ -12,7 +12,6 @@ urlpatterns = [
     path('blood_pressure/<uuid:patient_id>', api.get_blood_pressure, name='get_blood_pressure'),
     path('parkinson/', api.post_parkinson, name='post_parkinson'),
     path('parkinson/<uuid:patient_id>', api.get_parkinson, name='get_parkinson'),
-    path('parkinson_comment/', api.parkinson_comments, name='parkinson_comments'),  # comment parkinson
     path('temperature/', api.post_temperature, name='post_temperature'),
     path('temperature/<uuid:patient_id>', api.get_temperature, name='get_temperature'),
     path('respiration_rate/', api.post_respiration_rate, name='post_respiration_rate'),
