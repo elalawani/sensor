@@ -1,134 +1,132 @@
 <template>
-  <div class="bg-gray-200 text-slate-900 rounded-xl mr-5 min-w-max min-h-screen">
-      <div class="col-span-3 space-y-4">
-          <div class="bg-gray-100 shadow">
-              <div class="flex grow flex-col p-4">
-                  <div class="flex w-full mt-2 space-x-3 ml-auto justify-end">
-                      <div>
-                          <span class="text-xs text-gray-400 underline hover:cursor-pointer hover:text-slate-900">
-                              add to my tasks
-                          </span>
-                          <div class="bg-sky-800 text-gray-50 p-3">
-                              <p class="text-sm">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus non quo tempore.
-                              </p>
-                          </div>
-                          <span class="text-xs text-gray-400 leading-none">2 min ago</span>
-                      </div>
-                      <div class="flex-shrink-0 h-10 w-10">
-                          <i class="py-4 px-4 text-gray-900 bg-slate-200 rounded-full">
-                              <font-awesome-icon icon="fa-solid fa-user" />
-                          </i>
-                      </div>
+  <div class="flex flex-col h-full">
+      <div
+          v-for="(chat, index) in chats"
+          :key="index"
+      >
+          <div
+              v-if="chat.user.id === currentUser"
+              class="m-2">
+              <div class="flex flex-row-reverse items-center">
+                  <div class="text-slate-400 p-4 rounded-full border border-slate-400 m-3">
+                      <i class="items-center flex justify-center">
+                          <font-awesome-icon icon="fa-solid fa-user" />
+                      </i>
                   </div>
-                  <div class="flex w-full mt-2 space-x-3 max-w-md ml-auto justify-end">
-                      <div>
-                            <span class="text-xs text-gray-400 underline hover:cursor-pointer hover:text-slate-900">
-                              add to my tasks
-                          </span>
-                          <div class="bg-sky-800 text-gray-50 p-3 rounded-l-lg rounded-br-lg">
-                              <p class="text-sm">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum enim, esse
-                                  fugit molestias nam perspiciatis quis! Accusantium commodi consectetur debitis delectus
-                                  dignissimos eligendi explicabo, fugit incidunt labore minus modi, nostrum, obcaecati
-                                  officiis pariatur perspiciatis repudiandae sed ullam unde vel vero. Accusamus adipisci
-                                  distinctio hic iure molestiae quas quasi rem reprehenderit sunt totam. Adipisci labore
-                                  nemo perferendis saepe vero. Architecto distinctio iusto labore quae quod? Animi blanditiis
-                                  culpa cum dolor dolore enim hic illo ipsum, itaque laudantium magnam magni maxime nisi nobis
-                                  odit quam quasi tempora tenetur veritatis voluptatum.
-                                  Autem dolore eos eveniet explicabo laboriosam, perferendis quam ullam voluptates. In?
-                              </p>
-                          </div>
-                          <span class="text-xs text-gray-400 leading-none">2 min ago</span>
+                  <div class="m-2">
+                      <span class="font-extralight hover:font-light hover:cursor-pointer text-xs border-b border-b-slate-500">add to Tasks</span>
+                      <div class="rounded-lg rounded-tr-none shadow-xl border dark:border-none overflow-auto dark:bg-sky-900 w-fit px-10 py-1">
+                          {{ chat.content }}
                       </div>
-                      <div class="flex-shrink-0 h-10 w-10">
-                          <i class="py-4 px-4 text-gray-900 bg-slate-200 rounded-full">
-                              <font-awesome-icon icon="fa-solid fa-user" />
-                          </i>
-                      </div>
-                  </div>
-                  <div class="flex w-full mt-2 space-x-3 max-w-md ml-auto justify-end">
-                      <div>
-                            <span class="text-xs text-gray-400 underline hover:cursor-pointer hover:text-slate-900">
-                              add to my tasks
-                          </span>
-                          <div class="bg-sky-800 text-gray-50 p-3 rounded-l-lg rounded-br-lg">
-                              <p class="text-sm">
-                                  Lorem
-                              </p>
-                          </div>
-                          <span class="text-xs text-gray-400 leading-none">2 min ago</span>
-                      </div>
-                      <div class="flex-shrink-0 h-10 w-10">
-                          <i class="py-4 px-4 text-gray-900 bg-slate-200 rounded-full">
-                              <font-awesome-icon icon="fa-solid fa-user" />
-                          </i>
-                      </div>
-                  </div>
-                  <div class="flex w-full mt-2 space-x-3 max-w-md">
-                      <div class="flex-shrink-0 h-10 w-10">
-                          <i class="py-4 px-4 text-gray-900 bg-slate-200 rounded-full">
-                              <font-awesome-icon icon="fa-solid fa-user" />
-                          </i>
-                      </div>
-                      <div>
-                            <span class="text-xs text-gray-400 underline hover:cursor-pointer hover:text-slate-900">
-                              add to my tasks
-                          </span>
-                          <div class="text-gray-900 bg-gray-200 p-3 rounded-r-lg rounded-bl-lg">
-                              <p class="text-sm">
-                                  Lorem ipsum  adipisicing elit. Doloribus non quo tempore.
-                              </p>
-                          </div>
-                          <span class="text-xs text-gray-400 leading-none">4 min ago</span>
-                      </div>
-
+                      <span class="font-extralight text-xs">{{ chat.created_at_formatted }} ago</span>
                   </div>
               </div>
           </div>
-      <div class="bg-gray-50 ">
-              <div class="p-4 relative">
-                  <textarea class="p-1 w-[90%] border rounded-lg text-gray-900" placeholder="write anything"></textarea>
-                  <a href="#" class="py-4 px-5 hover:bg-sky-800 bg-slate-200 text-sky-800 hover:text-slate-200 rounded-full absolute top-5 right-3 cursor-pointer">
-                      <font-awesome-icon icon="fa-solid fa-paper-plane" />
-                  </a>
+          <div
+              v-else
+              class="m-5">
+              <div class="flex flex-row items-center">
+                  <div class="text-slate-400 p-4 rounded-full border border-slate-400 m-3">
+                      <i class="items-center flex justify-center">
+                          <font-awesome-icon icon="fa-solid fa-user" />
+                      </i>
+                  </div>
+                  <div class="">
+                      <div class="font-extralight mb-1 pr-2 hover:font-light text-xs flex justify-end">
+                          <span class="hover:cursor-pointer border-b border-b-slate-500">
+                              add to Tasks
+                          </span>
+                      </div>
+                      <div class="rounded-lg flex flex-col rounded-tl-none shadow-xl border dark:border-none overflow-auto dark:bg-slate-500 w-fit px-10 py-1">
+                          {{ chat.content }}
+                      </div>
+                      <span class="font-extralight text-xs flex justify-end pr-2">{{ chat.created_at_formatted }} ago</span>
+                  </div>
               </div>
-
           </div>
       </div>
+      <div class="flex flex-row border-t border-t-slate-500 justify-around items-center p-2 w-full dark:bg-slate-600 bg-gray-50 mt-1 py-4 sticky bottom-0 px-3 backdrop-blur">
+          <input
+              type="text"
+              class="shadow-xl w-full p-2 rounded-lg mx-2 dark:bg-slate-500 dark:text-slate-100 text-slate-900"
+              placeholder="write anything"
+              v-model="content"
+          />
+          <button
+              @click="send_message"
+              class="px-3 py-2 rounded-full dark:bg-sky-900 text-slate-100
+                      dark:hover:bg-sky-700 bg-sky-700 hover:bg-sky-600"
+          >
+              <font-awesome-icon icon="fa-solid fa-paper-plane" />
+          </button>
+      </div>
+
   </div>
 </template>
 <script>
-
-
+import axios from "axios";
+import {useRoute} from "vue-router";
+import {useUserStore} from "@/stores/user";
 
 export default {
+    name: 'conversation',
+    setup() {
+
+    },
     data() {
         return {
-            patient: [{
-                'id': 1,
-                'firstName': 'Alice',
-                'lastName': "Smith",
-                'gender': 'Female',
-                'dateOfBirth': '1990-03-12',
-                'address': {
-                    "street": "456 Elm St",
-                    "city": "Los Angeles",
-                    "state": "CA",
-                    "zipcode": "90001"
-                },
-                "contact": {
-                    "email": "alice.smith@example.com",
-                    "phone": "+1 (555) 987-6543"
-                },
-                "medicalHistory": {
-                    "allergies": ["Dust", "Pollen"]
-                },
-                "chronicConditions": ["Asthma"],
-                "medications": ["Albuterol"],
-                "surgeries": []
-            }
-            ]
+            content: '',
+            chats: [],
+            conversation_id: '',
+            patient_id: useRoute().params.id,
+            currentUser: useUserStore().user.id
+        }
+    },
+    mounted() {
+        this.get_conversation()
+    },
+    methods: {
+        async get_conversation() {
+            console.log(this.conversation_id)
+            await axios
+                .get(`/api/conversation/${this.patient_id}`)
+                .then(response => {
+                    console.log(response.data)
+                    this.conversation_id = response.data.id
+                    console.log(this.conversation_id)
+                    this.get_messages()
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        async send_message() {
+            const message = {
+                content: this.content,  // Assuming this.content is the message text
+            };
+             console.log(this.conversation_id)
+            await axios
+                .post(`/api/conversation/${this.conversation_id}/message/`, message)
+                .then(
+                    response => {
+                        console.log(response.data)
+                        this.get_messages()
+                    }
+                )
+                .catch(error =>{
+                    console.log(error.response.data)
+                })
+        },
+        async get_messages() {
+             console.log(this.conversation_id)
+            await axios
+                .get(`/api/conversation/${this.conversation_id}/messages/`)
+                .then(response => {
+                    this.chats = response.data
+                })
+                .catch(error =>{
+                    console.log(error.response.data)
+                })
         }
     }
 }
