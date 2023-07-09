@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from django.core.exceptions import PermissionDenied
 from rest_framework.permissions import IsAdminUser
 
+from conversation.models import Conversation
 from .filters import PatientFilter
 from .serializers import PatientSerializer, MedicationsSerializer, ChronicConditionsSerializer
 from .models import Patient, Medication, ChronicCondition
@@ -82,10 +83,19 @@ def add_patient(request):
         patient = form.save(commit=False)
         patient.created_by = request.user
         patient.save()
-        patient.doctors.set(form.cleaned_data.get('doctors'))
-        patient.nurses.set(form.cleaned_data.get('nurses'))
+        doctors = form.cleaned_data.get('doctors')
+        nurses = form.cleaned_data.get('nurses')
+        patient.doctors.set(doctors)
+        patient.nurses.set(nurses)
         patient.chronicConditions.set(form.cleaned_data.get('chronicConditions'))
         patient.medications.set(form.cleaned_data.get('medications'))
+
+        conversation = Conversation.objects.create(patient=patient)
+
+        for user in list(doctors) + list(nurses):
+            conversation.users.add(user)
+
+
         patient.save()
 
     else:
