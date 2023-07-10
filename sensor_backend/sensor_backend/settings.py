@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'patient',
     'sensor',
     'conversation',
+    'todoList',
 ]
 
 MIDDLEWARE = [

@@ -6,5 +6,6 @@ urlpatterns = [
     path('api/conversation/', include('conversation.urls')),
     path('api/patients/', include('patient.urls')),
     path('api/sensor/', include('sensor.urls')),
+    path('api/todo/', include('todoList.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -13,6 +13,7 @@ import conversations from "@/components/patientView/conversations.vue";
 import documentations from "@/components/patientView/documentations.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import NewDataFormView from "@/views/NewDataFormView.vue";
+import TodoView from "@/views/TodoView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,12 @@ const router = createRouter({
             path: '/',
             name: 'dashboard',
             component: DashboardView,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/todo',
+            name: 'todo',
+            component: TodoView,
             meta: { requiresAuth: true }
         },
         {

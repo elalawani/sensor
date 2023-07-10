@@ -8,7 +8,7 @@
                     <span>
                         my Todos
                     </span>
-                    <router-link to="/">
+                    <router-link to="/todo">
                         all
                     </router-link>
                 </div>
