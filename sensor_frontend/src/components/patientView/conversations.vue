@@ -14,7 +14,6 @@
                       </i>
                   </div>
                   <div class="m-2">
-                      <span class="font-extralight hover:font-light hover:cursor-pointer text-xs border-b border-b-slate-500">add to Tasks</span>
                       <div class="rounded-lg rounded-tr-none shadow-xl border dark:border-none overflow-auto dark:bg-sky-900 w-fit px-10 py-1">
                           {{ chat.content }}
                       </div>
@@ -33,7 +32,11 @@
                   </div>
                   <div class="">
                       <div class="font-extralight mb-1 pr-2 hover:font-light text-xs flex justify-end">
-                          <span class="hover:cursor-pointer border-b border-b-slate-500">
+                          <span
+                              v-if="!tasksAdded[index]"
+                              class="hover:cursor-pointer border-b border-b-slate-500"
+                              @click="addTask(chat.content, index); editTask(index)"
+                          >
                               add to Tasks
                           </span>
                       </div>
@@ -67,6 +70,7 @@
 import axios from "axios";
 import {useRoute} from "vue-router";
 import {useUserStore} from "@/stores/user";
+import {reactive} from "vue";
 
 export default {
     name: 'conversation',
@@ -76,6 +80,7 @@ export default {
     data() {
         return {
             content: '',
+            tasksAdded: reactive({}),
             chats: [],
             conversation_id: '',
             patient_id: useRoute().params.id,
@@ -84,8 +89,15 @@ export default {
     },
     mounted() {
         this.get_conversation()
+        this.loadTasks()
     },
     methods: {
+        loadTasks() {
+            const tasksAddedStorage = JSON.parse(localStorage.getItem('tasksAdded'));
+            if (tasksAddedStorage) {
+                this.tasksAdded = tasksAddedStorage;
+            }
+        },
         async get_conversation() {
             console.log(this.conversation_id)
             await axios
@@ -104,7 +116,7 @@ export default {
             const message = {
                 content: this.content,  // Assuming this.content is the message text
             };
-             console.log(this.conversation_id)
+            console.log(this.conversation_id)
             await axios
                 .post(`/api/conversation/${this.conversation_id}/message/`, message)
                 .then(
@@ -118,7 +130,7 @@ export default {
                 })
         },
         async get_messages() {
-             console.log(this.conversation_id)
+            console.log(this.conversation_id)
             await axios
                 .get(`/api/conversation/${this.conversation_id}/messages/`)
                 .then(response => {
@@ -127,8 +139,34 @@ export default {
                 .catch(error =>{
                     console.log(error.response.data)
                 })
-        }
-    }
+        },
+        addTask(text, num) {
+            axios
+                .post('api/todo/create/', {
+                    name: text
+                })
+                .then(
+                    response => {
+                        console.log(response.data)
+                        this.tasksAdded[num] = true;
+                        this.saveTasks();
+
+                    }
+                ).
+            catch(error => {
+                console.log(error)
+            })
+
+        },
+        editTask(num) {
+         this.tasksAdded[num] = true;
+         this.saveTasks();
+
+        },
+        saveTasks() {
+            localStorage.setItem('tasksAdded', JSON.stringify(this.tasksAdded));
+        },
+    },
 }
 
 

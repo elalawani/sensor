@@ -2,7 +2,7 @@
     <div class="container mx-auto mt-10 p-4">
         <div class="flex flex-col justify-center">
             <h1 class="text-4xl font-extrabold mb-4">Todo</h1>
-            <ul class="flex flex-col h-screen overflow-auto">
+            <ul class="flex flex-col overflow-auto">
                 <li
                     v-for="(task, index) in tasks"
                     :key="index"
