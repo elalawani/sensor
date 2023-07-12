@@ -95,7 +95,6 @@ def add_patient(request):
         for user in list(doctors) + list(nurses):
             conversation.users.add(user)
 
-
         patient.save()
 
     else:
