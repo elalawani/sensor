@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'sensor',
     'conversation',
     'todoList',
+    'documentation',
 ]
 
 MIDDLEWARE = [
