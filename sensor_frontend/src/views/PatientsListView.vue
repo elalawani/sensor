@@ -25,7 +25,7 @@
                     filter by disease or chronic Conditions
                 </label>
 
-                <div class="flex flex-row justify-around my-3">
+                <div class="flex flex-row justify-around my-3 space-x-3">
                      <multiselect
                                         v-model="filters.byMedications"
                                         :options="medications"
@@ -47,7 +47,7 @@
                     filter by doctor or nurse
                 </label>
 
-                <div class="flex flex-row justify-around mt-3">
+                <div class="flex flex-row justify-around mt-3 space-x-3">
                     <multiselect
                                         v-model="filters.byDoctor"
                                         :options="doctors"
@@ -265,15 +265,15 @@ export default {
              const elements2 = document.querySelectorAll('.multiselect-dropdown');
              const elements3 = document.querySelectorAll('.multiselect-option.is-selected');
              elements1.forEach((element) => {
-                 element.style.backgroundColor = "#333";
+                 element.style.backgroundColor = "#64748b";
                  element.style.color = "#f5f5f5";
              });
              elements2.forEach((element) => {
-                 element.style.backgroundColor = "#333";
+                 element.style.backgroundColor = "#64748b";
                  element.style.color = "#f5f5f5";
              });
              elements3.forEach((element) => {
-                 element.style.backgroundColor = "#333";
+                 element.style.backgroundColor = "#64748b";
                  element.style.color = "#f5f5f5";
              });
          });

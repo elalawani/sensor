@@ -16,7 +16,7 @@ class TasksAbstract(models.Model):
     created_by = models.ForeignKey(User, related_name='%(class)s_creator', on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, related_name='%(class)s_patient', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    duration = models.TimeField(null=True, blank=True)
+    duration = models.CharField(max_length=50, null=True, blank=True)
     documentation_role = models.CharField(max_length=50, choices=DOCUMENTATION_ROLES, blank=True, null=True)
     code = models.CharField(max_length=10, null=True, blank=True)
 
@@ -25,11 +25,11 @@ class TasksAbstract(models.Model):
 
 
 class InitialExamination(TasksAbstract):
-    centre_pick = models.CharField(max_length=255, blank=True)
+    centrePick = models.CharField(max_length=255, blank=True)
 
 
 class InstructionWearable(TasksAbstract):
-    centre_pick = models.CharField(max_length=255, blank=True)
+    centrePick = models.CharField(max_length=255, blank=True)
 
 
 class InitialInterviewTelephone(TasksAbstract):
