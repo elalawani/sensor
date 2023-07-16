@@ -4,50 +4,46 @@ from account.serializers import UserSerializer
 from patient.serializers import PatientSerializer
 
 
-class InitialExaminationSerializer(serializers.ModelSerializer):
+class TasksAbstractSerializer(serializers.ModelSerializer):
     created_by = UserSerializer(read_only=True)
     patient = PatientSerializer(read_only=True)
 
     class Meta:
+        model = TasksAbstract
+        fields = ('duration', 'documentation_role', 'code')
+
+
+class InitialExaminationSerializer(TasksAbstractSerializer):
+    class Meta(TasksAbstractSerializer.Meta):
         model = InitialExamination
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('centrePick',)
 
 
-class InstructionWearableSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
-
-    class Meta:
+class InstructionWearableSerializer(TasksAbstractSerializer):
+    class Meta(TasksAbstractSerializer.Meta):
         model = InstructionWearable
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('centrePick',)
 
 
-class InitialInterviewTelephoneSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
-
-    class Meta:
+class InitialInterviewTelephoneSerializer(TasksAbstractSerializer):
+    class Meta(TasksAbstractSerializer.Meta):
         model = InitialInterviewTelephone
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('conversation_reason',)
 
 
-class DataReviewProcessingSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
-
-    class Meta:
+class DataReviewProcessingSerializer(TasksAbstractSerializer):
+    class Meta(TasksAbstractSerializer.Meta):
         model = DataReviewProcessing
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('duration_month',)
 
 
-class TelephoneConsultationSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
+class TelephoneConsultationSerializer(TasksAbstractSerializer):
     consultation_by = UserSerializer(many=True, read_only=True)
 
-    class Meta:
+    class Meta(TasksAbstractSerializer.Meta):
         model = TelephoneConsultation
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('consultation_reason', 'consultation_by', 'conversation_topics',
+                                                        'recommendations', 'recommendation_issued', 'others',)
 
 
 class FeedbackCareTeamTelephoneConsultationSerializer(serializers.ModelSerializer):
@@ -59,53 +55,53 @@ class FeedbackCareTeamTelephoneConsultationSerializer(serializers.ModelSerialize
         fields = "__all__"
 
 
-class CaseReviewNurseCouncilSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
+class CaseReviewNurseCouncilSerializer(TasksAbstractSerializer):
     participants = UserSerializer(many=True, read_only=True)
 
-    class Meta:
+    class Meta(TasksAbstractSerializer.Meta):
         model = CaseReviewNurseCouncil
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('second_visit_required', 'participants', 'discussed_issues',
+                                                        'specialist_consultation_required', 'recommendations',
+                                                        'recommendation_issued', 'anamnese_discussed',)
 
 
-class CaseReviewCouncilSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
+class CaseReviewCouncilSerializer(TasksAbstractSerializer):
     participants = UserSerializer(many=True, read_only=True)
 
-    class Meta:
+    class Meta(TasksAbstractSerializer.Meta):
         model = CaseReviewCouncil
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('participants', 'anamnese_discussed',)
 
 
-class CaseReviewSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
+class CaseReviewSerializer(TasksAbstractSerializer):
     participants = UserSerializer(many=True, read_only=True)
 
-    class Meta:
+    class Meta(TasksAbstractSerializer.Meta):
         model = CaseReview
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('participants', 'anamnese_discussed',)
 
 
-class ConsultationSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
-
-    class Meta:
+class ConsultationSerializer(TasksAbstractSerializer):
+    class Meta(TasksAbstractSerializer.Meta):
         model = Consultation
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + (
+            'doctor_initials',
+            'decisions',
+            'reason_for_admission',
+            'hospital_admission_required',
+            'clinic_appointment_required',
+            'reason_for_clinic_appointment',
+            'measures_after_appointment',
+            'measures_taken'
+        )
 
 
-class VisitSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
+class VisitSerializer(TasksAbstractSerializer):
     participants = UserSerializer(many=True, read_only=True)
 
-    class Meta:
+    class Meta(TasksAbstractSerializer.Meta):
         model = Visit
-        fields = "__all__"
+        fields = TasksAbstractSerializer.Meta.fields + ('participants',)
 
 
 class EquipmentSerializer(serializers.ModelSerializer):

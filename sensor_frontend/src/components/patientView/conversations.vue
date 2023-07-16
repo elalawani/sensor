@@ -114,7 +114,7 @@ export default {
         },
         async send_message() {
             const message = {
-                content: this.content,  // Assuming this.content is the message text
+                content: this.content,
             };
             console.log(this.conversation_id)
             await axios
@@ -122,6 +122,7 @@ export default {
                 .then(
                     response => {
                         console.log(response.data)
+                        this.content = ''
                         this.get_messages()
                     }
                 )
