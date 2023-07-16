@@ -35,14 +35,14 @@ urlpatterns = [
     ),
 
     path(
-        'data_review_processings/',
+        'data_review_processing/',
         api.DataReviewProcessingListCreate.as_view(),
-        name='data_review_processings_list_create'
+        name='data_review_processing_list_create'
     ),
     path(
-        'data_review_processings/<uuid:pk>/',
+        'data_review_processing/<uuid:pk>/',
         api.DataReviewProcessingRetrieveUpdateDestroy.as_view(),
-        name='data_review_processings_retrieve_update_destroy'
+        name='data_review_processing_retrieve_update_destroy'
     ),
 
     path(

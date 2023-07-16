@@ -10,7 +10,7 @@ class TasksAbstractSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TasksAbstract
-        fields = ('duration', 'documentation_role', 'code')
+        fields = ('duration', 'documentation_role', 'code', 'created_by', 'patient', 'created_at')
 
 
 class InitialExaminationSerializer(TasksAbstractSerializer):
