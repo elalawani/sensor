@@ -38,7 +38,7 @@
                                 <div class="py-1 px-6 dark:bg-sky-900 rounded-lg dark:hover:bg-sky-700 hover:bg-sky-700 dark:border-0
                                 border border-sky-700 text-sky-700 hover:text-slate-100 dark:text-slate-100">
                                     <router-link
-                                    to="login"
+                                    to="/login"
                                 >
                                     Sign in
                                 </router-link>
@@ -46,7 +46,7 @@
                                 <div class="py-1 px-6 dark:bg-slate-700 rounded-lg dark:hover:bg-slate-500 hover:bg-slate-500 dark:border-0
                                 border border-slate-700 text-slate-700 hover:text-slate-100 dark:text-slate-100">
                                     <router-link
-                                    to="signup"
+                                    to="/signup"
                                 >
                                     Sign up
                                 </router-link>

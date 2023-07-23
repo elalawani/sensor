@@ -6,11 +6,10 @@ from patient.serializers import PatientSerializer
 
 class TasksAbstractSerializer(serializers.ModelSerializer):
     created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
 
     class Meta:
         model = TasksAbstract
-        fields = ('duration', 'documentation_role', 'code', 'created_by', 'patient', 'created_at')
+        fields = ('duration', 'documentation_role', 'code', 'created_by', 'patient', 'created_at', 'note')
 
 
 class InitialExaminationSerializer(TasksAbstractSerializer):
@@ -47,8 +46,8 @@ class TelephoneConsultationSerializer(TasksAbstractSerializer):
 
 
 class FeedbackCareTeamTelephoneConsultationSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
-    patient = PatientSerializer(read_only=True)
+    created_by = UserSerializer()
+    patient = PatientSerializer()
 
     class Meta:
         model = FeedbackCareTeamTelephoneConsultation

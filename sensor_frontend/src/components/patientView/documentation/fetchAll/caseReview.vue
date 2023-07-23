@@ -5,26 +5,30 @@
                 Fallbesprechung mit der/ dem Fachärzt
             </h1>
         </div>
-
-        <select class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
+       <div class="flex flex-row justify-between container px-4">
+            <select class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
             <option value="">export</option>
             <option value="pdf">pdf</option>
             <option value="csv">csv</option>
             <option value="fhir">fhir</option>
         </select>
+        <select v-model="selected" class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
+            <option v-for="(_, index) in caseReviews"
+                    :value="index"
+                    :key="index"
+            >
+                go to page: {{index}}</option>
+        </select>
+       </div>
         <div
-            v-for="caseReview in caseReviews"
-            class="flex justify-start items-start">
-            <table class="rounded text-sm text-left text-slate-500 dark:text-slate-100 w-full">
+            v-for="(caseReview, index) in caseReviews"
+            class="flex flex-col justify-start items-start"
+            :key="index"
+        >
+            <table
+                v-if="index === selected"
+                class="rounded text-sm text-left text-slate-500 dark:text-slate-100 w-full">
                 <tbody>
-                <tr class="border dark:bg-slate-800 dark:border-slate-700">
-                    <th class="pl-2 py-4 dark:bg-sky-700 w-fit">
-                        patient
-                    </th>
-                    <td class="pl-2 py-4">
-                        {{caseReview.patient.last_name}},  {{caseReview.patient.first_name}}
-                    </td>
-                </tr>
                 <tr class="border dark:bg-slate-800 dark:border-slate-700">
                     <th class="pl-2 py-4 dark:bg-sky-700 w-1/4">
                         added by
@@ -70,10 +74,12 @@
                     <th class="pl-2 py-4 dark:bg-sky-700 w-fit">
                         participants
                     </th>
-                    <td
+                    <td>
+                        <div
                         v-for="name in caseReview.participants"
                         class="pl-2 py-4">
                         {{ name.name }}
+                    </div>
                     </td>
                 </tr>
                 <tr class="border dark:bg-slate-800 dark:border-slate-700">
@@ -101,15 +107,19 @@
 </template>
 <script setup>
 import {useDocumentationsStore} from "@/stores/documentation";
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
 
 const caseReview = useDocumentationsStore()
+const patient_id = useRoute().params.id
 
 const fetchData = async () => {
-    await caseReview.get_case_review()
+    await caseReview.get_case_review(patient_id)
 }
 onMounted(fetchData)
 
 const caseReviews = computed(()=> caseReview.case_review)
+const selected = ref( caseReviews.value.length-1);
+
 
 </script>

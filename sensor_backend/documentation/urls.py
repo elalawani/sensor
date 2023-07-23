@@ -3,126 +3,138 @@ from . import api
 
 urlpatterns = [
     path(
-        'initial_examinations/',
-        api.InitialExaminationListCreateAPIView.as_view(),
-        name='initial_examinations_list_create'
-    ),
-    path(
-        'initial_examinations/<uuid:pk>/',
-        api.InitialExaminationRetrieveUpdateDestroy.as_view(),
-        name='initial_examinations_retrieve_update_destroy'
+        'initial_examinations/create/',
+        api.initial_examination_create,
+        name='initial_examination_create'
     ),
 
     path(
-        'instruction_wearables/',
-        api.InstructionWearableListCreate.as_view(),
-        name='instruction_wearables_list_create'
+        'initial_examinations/<uuid:patient_id>/',
+        api.initial_examination_list,
+        name='initial_examination_list'
     ),
-    path('instruction_wearables/<uuid:pk>/',
-         api.InstructionWearableRetrieveUpdateDestroy.as_view(),
-         name='instruction_wearables_retrieve_update_destroy'
+
+    path(
+        'instruction_wearables/create/',
+        api.instruction_wearables_create,
+        name='instruction_wearables_create'
+    ),
+    path('instruction_wearables/<uuid:patient_id>/',
+         api.instruction_wearables_list,
+         name='instruction_wearables_list'
          ),
 
     path(
-        'initial_interview_telephones/',
-        api.InitialInterviewTelephoneListCreate.as_view(),
-        name='initial_interview_telephones_list_create'
+        'initial_interview_telephones/create/',
+        api.initial_interview_telephones_create,
+        name='initial_interview_telephones_create'
     ),
     path(
-        'initial_interview_telephones/<uuid:pk>/',
-        api.InitialInterviewTelephoneRetrieveUpdateDestroy.as_view(),
-        name='initial_interview_telephones_retrieve_update_destroy'
-    ),
-
-    path(
-        'data_review_processing/',
-        api.DataReviewProcessingListCreate.as_view(),
-        name='data_review_processing_list_create'
-    ),
-    path(
-        'data_review_processing/<uuid:pk>/',
-        api.DataReviewProcessingRetrieveUpdateDestroy.as_view(),
-        name='data_review_processing_retrieve_update_destroy'
+        'initial_interview_telephones/<uuid:patient_id>/',
+        api.initial_interview_telephones_list,
+        name='initial_interview_telephones_list'
     ),
 
     path(
-        'telephone_consultations/',
-        api.TelephoneConsultationListCreate.as_view(),
-        name='telephone_consultations_list_create'
+        'data_review_processing/create/',
+        api.data_review_processing_create,
+        name='data_review_processing_create'
     ),
     path(
-        'telephone_consultations/<uuid:pk>/',
-        api.TelephoneConsultationRetrieveUpdateDestroy.as_view(),
-        name='telephone_consultations_retrieve_update_destroy'
+        'data_review_processing/<uuid:patient_id>/',
+        api.data_review_processing_list,
+        name='data_review_processing_list'
+    ),
+
+    path(
+        'telephone_consultations/create/',
+        api.telephone_consultations_create,
+        name='telephone_consultations_create'
     ),
     path(
-        'feedback_careTeam_telephone_consultation/',
-        api.FeedbackCareTeamTelephoneConsultationListCreate.as_view(),
-        name='feedback_careTeam_telephone_consultation_list_create'
+        'telephone_consultations/<uuid:patient_id>/',
+        api.telephone_consultations_list,
+        name='telephone_consultations_list'
     ),
     path(
-        'feedback_careTeam_telephone_consultation/<uuid:pk>/',
-        api.FeedbackCareTeamTelephoneConsultationRetrieveUpdateDestroy.as_view(),
-        name='feedback_careTeam_telephone_consultation_retrieve_update_destroy'
-    ), path(
-        'case_review_nurse_council/',
-        api.CaseReviewNurseCouncilListCreate.as_view(),
-        name='case_review_nurse_council_list_create'
+        'consultation_reason_choices/',
+        api.consultation_reason_choices,
+        name='consultation_reason_choices'
     ),
     path(
-        'case_review_nurse_council/<uuid:pk>/',
-        api.CaseReviewNurseCouncilRetrieveUpdateDestroy.as_view(),
-        name='case_review_nurse_council_retrieve_update_destroy'
+        'feedback_care_team_telephone_consultation/create/',
+        api.feedback_care_team_telephone_consultation_create,
+        name='feedback_care_team_telephone_consultation_create'
     ),
     path(
-        'case_review_council/',
-        api.CaseReviewCouncilListCreate.as_view(),
-        name='case_review_council_list_create'
+        'feedback_care_team_telephone_consultation/<uuid:patient_id>/',
+        api.feedback_care_team_telephone_consultation_list,
+        name='feedback_care_team_telephone_consultation_list'
     ),
     path(
-        'case_review_council/<uuid:pk>/',
-        api.CaseReviewCouncilRetrieveUpdateDestroy.as_view(),
-        name='case_review_council_retrieve_update_destroy'
+        'feedback_care_team_telephone_consultation_choices/',
+        api.feedback_care_team_telephone_consultation_choices,
+        name='feedback_care_team_telephone_consultation_choices'
     ),
     path(
-        'case_review/',
-        api.CaseReviewListCreate.as_view(),
-        name='case_review_list_create'
+        'case_review_nurse_council/create/',
+        api.case_review_nurse_council_create,
+        name='case_review_nurse_council_create'
     ),
     path(
-        'case_review/<uuid:pk>/',
-        api.CaseReviewRetrieveUpdateDestroy.as_view(),
-        name='case_review_retrieve_update_destroy'
+        'case_review_nurse_council/<uuid:patient_id>/',
+        api.case_review_nurse_council_list,
+        name='case_review_nurse_council_list'
     ),
     path(
-        'consultation/',
-        api.ConsultationListCreate.as_view(),
-        name='consultation_list_create'
+        'case_review_council/create/',
+        api.case_review_council_create,
+        name='case_review_council_create'
     ),
     path(
-        'consultation/<uuid:pk>/',
-        api.ConsultationRetrieveUpdateDestroy.as_view(),
-        name='consultation_retrieve_update_destroy'
+        'case_review_council/<uuid:patient_id>/',
+        api.case_review_council_list,
+        name='case_review_council_list'
     ),
     path(
-        'visit/',
-        api.VisitListCreate.as_view(),
-        name='visit_list_create'
+        'case_review/create/',
+        api.case_review_create,
+        name='case_review_create'
     ),
     path(
-        'visit/<uuid:pk>/',
-        api.VisitRetrieveUpdateDestroy.as_view(),
-        name='visit_retrieve_update_destroy'
+        'case_review/<uuid:patient_id>/',
+        api.case_review_list,
+        name='case_review_list'
     ),
     path(
-        'equipment/',
-        api.EquipmentListCreate.as_view(),
-        name='equipment_list_create'
+        'consultation/create/',
+        api.consultation_create,
+        name='consultation_create'
     ),
     path(
-        'equipment/<uuid:pk>/',
-        api.EquipmentRetrieveUpdateDestroy.as_view(),
-        name='equipment_retrieve_update_destroy'
+        'consultation/<uuid:patient_id>/',
+        api.consultation_list,
+        name='consultation_list'
+    ),
+    path(
+        'visit/create/',
+        api.visit_create,
+        name='visit_create'
+    ),
+    path(
+        'visit/<uuid:patient_id>/',
+        api.visit_list,
+        name='visit_list'
+    ),
+    path(
+        'equipment/create/',
+        api.equipment_create,
+        name='equipment_create'
+    ),
+    path(
+        'equipment/<uuid:patient_id>/',
+        api.equipment_list,
+        name='equipment_list'
     ),
 
 ]

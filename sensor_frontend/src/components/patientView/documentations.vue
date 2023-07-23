@@ -42,9 +42,9 @@
 
             <div class="right flex flex-col w-1/2 p-2">
                 <div class="mb-16 space-y-2 flex flex-col items-center">
-                    <button class="p-2 bg-sky-700 rounded">
+                    <router-link :to="`/patients/${id}/add_docu`" class="p-2 bg-sky-700 rounded">
                         add +
-                    </button>
+                    </router-link>
                 </div>
                 <div class="flex flex-col w-full h-96 overflow-auto">
                     <button
@@ -138,6 +138,7 @@ import CaseReviewCouncil from "@/components/patientView/documentation/fetchAll/c
 import CaseReviewNurseCouncil from "@/components/patientView/documentation/fetchAll/caseReviewNurseCouncil.vue";
 import TelephoneConsultations from "@/components/patientView/documentation/fetchAll/telephoneConsultations.vue";
 import Consultation from "@/components/patientView/documentation/fetchAll/consultation.vue";
+import {useRoute} from "vue-router";
 
 export default {
     name: 'documentation',
@@ -158,6 +159,7 @@ export default {
     data() {
         return {
             dataView: '',
+            id: useRoute().params.id,
         }
     },
 }

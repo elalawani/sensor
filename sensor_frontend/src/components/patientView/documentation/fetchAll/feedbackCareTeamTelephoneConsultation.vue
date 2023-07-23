@@ -2,19 +2,30 @@
     <div class="left flex flex-col h-full border-r border-r-slate-500 w-full p-2">
         <div class="w-full bg-sky-700">
             <h1 class="flex justify-around text-[min(10vw,30px)] p-4">
-                Rückmeldung an das Versorgungsteam nach telefonischer Konsultation (57203A06)
+                Rückmeldung an das Versorgungsteam nach telefonischer Konsultation
             </h1>
         </div>
-        <select class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
+       <div class="flex flex-row justify-between container px-4">
+            <select class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
             <option value="">export</option>
             <option value="pdf">pdf</option>
             <option value="csv">csv</option>
             <option value="fhir">fhir</option>
         </select>
+        <select v-model="selected" class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
+            <option v-for="(_, index) in feedbackCareTeamTelephoneConsultations"
+                    :value="index"
+                    :key="index"
+            >
+                go to page: {{index}}</option>
+        </select>
+       </div>
         <div
-            v-for="feedbackCareTeamTelephoneConsultation in feedbackCareTeamTelephoneConsultations"
+            v-for="(feedbackCareTeamTelephoneConsultation, index) in feedbackCareTeamTelephoneConsultations"
             class="flex justify-start items-start">
-            <table class="rounded text-sm text-left text-slate-500 dark:text-slate-100 w-full">
+            <table
+                v-if="index === selected"
+                class="rounded text-sm text-left text-slate-500 dark:text-slate-100 w-full">
                 <tbody>
                 <tr class="border dark:bg-slate-800 dark:border-slate-700">
                     <th class="pl-2 py-4 dark:bg-sky-700 w-fit">
@@ -103,15 +114,17 @@
 </template>
 <script setup>
 import {useDocumentationsStore} from "@/stores/documentation";
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
 
 const feedbackCareTeamTelephoneConsultation = useDocumentationsStore()
+const patient_id = useRoute().params.id
 
 const fetchData = async () => {
-    await feedbackCareTeamTelephoneConsultation.get_feedback_careTeam_telephone_consultation()
+    await feedbackCareTeamTelephoneConsultation.get_feedback_careTeam_telephone_consultation(patient_id)
 }
 onMounted(fetchData)
 
 const feedbackCareTeamTelephoneConsultations = computed(()=> feedbackCareTeamTelephoneConsultation.feedback_careTeam_telephone_consultation)
-
+let selected = ref(feedbackCareTeamTelephoneConsultations.value.length-1)
 </script>
