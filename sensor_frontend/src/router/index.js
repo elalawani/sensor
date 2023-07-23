@@ -14,6 +14,7 @@ import documentations from "@/components/patientView/documentations.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import NewDataFormView from "@/views/NewDataFormView.vue";
 import TodoView from "@/views/TodoView.vue";
+import NewDocuFormsView from "@/views/NewDocuFormsView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -93,6 +94,12 @@ const router = createRouter({
                     path: '/patients/:id/add_data',
                     name: 'add_data',
                     component: NewDataFormView,
+                    meta: { requiresAuth: true }
+                },
+                {
+                    path: '/patients/:id/add_docu',
+                    name: 'add_docu',
+                    component: NewDocuFormsView,
                     meta: { requiresAuth: true }
                 },
             ]

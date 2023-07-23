@@ -5,25 +5,28 @@
                 Datensichtung, Beurteilung & Aufbereitung
             </h1>
         </div>
-        <select class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
+        <div class="flex flex-row justify-between container px-4">
+            <select class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
             <option value="">export</option>
             <option value="pdf">pdf</option>
             <option value="csv">csv</option>
             <option value="fhir">fhir</option>
         </select>
+        <select v-model="selected" class="flex justify-end items-end py-2 my-1 rounded bg-sky-900 px-1 w-fit">
+            <option v-for="(_, index) in dataProcessing"
+                    :value="index"
+                    :key="index"
+            >
+                go to page: {{index}}</option>
+        </select>
+       </div>
         <div
-            v-for="data in dataProcessing"
+            v-for="(data, index) in dataProcessing"
             class="flex justify-start items-start">
-            <table class="rounded text-sm text-left text-slate-500 dark:text-slate-100 w-full">
+            <table
+                v-if="index === selected"
+                class="rounded text-sm text-left text-slate-500 dark:text-slate-100 w-full">
                 <tbody>
-                <tr class="border dark:bg-slate-800 dark:border-slate-700">
-                    <th class="pl-2 py-4 dark:bg-sky-700 w-fit">
-                        patient
-                    </th>
-                    <td class="pl-2 py-4">
-                        {{data.patient.last_name}},  {{data.patient.first_name}}
-                    </td>
-                </tr>
                 <tr class="border dark:bg-slate-800 dark:border-slate-700">
                     <th class="pl-2 py-4 dark:bg-sky-700 w-1/4">
                         added by
@@ -90,15 +93,18 @@
 </template>
 <script setup>
 import {useDocumentationsStore} from "@/stores/documentation";
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
 
 const dataReviewProcessing = useDocumentationsStore()
+const patient_id = useRoute().params.id
 
 const fetchData = async () => {
-    await dataReviewProcessing.get_data_review_processing()
+    await dataReviewProcessing.get_data_review_processing(patient_id)
 }
 onMounted(fetchData)
 
 const dataProcessing = computed(()=> dataReviewProcessing.data_review_processing)
+const selected = ref( dataProcessing.value.length-1);
 
 </script>

@@ -13,12 +13,13 @@ class TasksAbstract(models.Model):
         ("Neurologen", "Neurologen"),
     )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    created_by = models.ForeignKey(User, related_name='%(class)s_creator', on_delete=models.CASCADE)
-    patient = models.ForeignKey(Patient, related_name='%(class)s_patient', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, related_name='%(class)s_creator', on_delete=models.CASCADE, null=True)
+    patient = models.ForeignKey(Patient, related_name='%(class)s_patient', on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     duration = models.CharField(max_length=50, null=True, blank=True)
     documentation_role = models.CharField(max_length=50, choices=DOCUMENTATION_ROLES, blank=True, null=True)
     code = models.CharField(max_length=10, null=True, blank=True)
+    note = models.TextField(null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -116,5 +117,9 @@ class Visit(TasksAbstract):
 
 
 class Equipment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    equipment = models.CharField(max_length=225, blank=True)
     created_at = models.CharField(max_length=10, blank=True)
     removed_at = models.CharField(max_length=10, blank=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+    note = models.TextField()
