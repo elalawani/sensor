@@ -8,5 +8,6 @@ urlpatterns = [
     path('api/sensor/', include('sensor.urls')),
     path('api/todo/', include('todoList.urls')),
     path('api/documentation/', include('documentation.urls')),
+    path('api/questionnaires/', include('questionnaires.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -20,7 +20,7 @@ def patient_list(request):
     elif user.role == 'NR':
         patients = Patient.objects.filter(nurses=user).distinct()
     else:
-        raise PermissionDenied("You do not have permission to view patients.")
+        raise PermissionDenied("You do not have permission to views patients.")
 
     filtered = PatientFilter(request.GET, queryset=patients)
 
@@ -43,12 +43,12 @@ def patient(request, pk):
         pass
     elif user.role == 'DR':
         if not Patient.objects.filter(doctors=user, pk=pk).exists():
-            raise PermissionDenied("You do not have permission to view patients.")
+            raise PermissionDenied("You do not have permission to views patients.")
     elif user.role == 'NR':
         if not Patient.objects.filter(nurses=user, pk=pk).exists():
-            raise PermissionDenied("You do not have permission to view patients.")
+            raise PermissionDenied("You do not have permission to views patients.")
     else:
-        raise PermissionDenied("You do not have permission to view patients.")
+        raise PermissionDenied("You do not have permission to views patients.")
 
     if request.method == 'GET':
         serializer = PatientSerializer(patient_info, context={'request': request})

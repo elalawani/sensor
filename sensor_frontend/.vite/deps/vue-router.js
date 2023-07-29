@@ -1242,11 +1242,11 @@ function normalizeQuery(query) {
   }
   return normalizedQuery;
 }
-var matchedRouteKey = Symbol(true ? "router view location matched" : "");
-var viewDepthKey = Symbol(true ? "router view depth" : "");
+var matchedRouteKey = Symbol(true ? "router views location matched" : "");
+var viewDepthKey = Symbol(true ? "router views depth" : "");
 var routerKey = Symbol(true ? "router" : "");
 var routeLocationKey = Symbol(true ? "route location" : "");
-var routerViewLocationKey = Symbol(true ? "router view location" : "");
+var routerViewLocationKey = Symbol(true ? "router views location" : "");
 function useCallbacks() {
   let handlers = [];
   function add(handler) {
@@ -1288,7 +1288,7 @@ function onBeforeRouteLeave(leaveGuard) {
     {}
   ).value;
   if (!activeRecord) {
-    warn("No active route record was found when calling `onBeforeRouteLeave()`. Make sure you call this function inside a component child of <router-view>. Maybe you called it inside of App.vue?");
+    warn("No active route record was found when calling `onBeforeRouteLeave()`. Make sure you call this function inside a component child of <router-views>. Maybe you called it inside of App.vue?");
     return;
   }
   registerGuard(activeRecord, "leaveGuards", leaveGuard);
@@ -1304,7 +1304,7 @@ function onBeforeRouteUpdate(updateGuard) {
     {}
   ).value;
   if (!activeRecord) {
-    warn("No active route record was found when calling `onBeforeRouteUpdate()`. Make sure you call this function inside a component child of <router-view>. Maybe you called it inside of App.vue?");
+    warn("No active route record was found when calling `onBeforeRouteUpdate()`. Make sure you call this function inside a component child of <router-views>. Maybe you called it inside of App.vue?");
     return;
   }
   registerGuard(activeRecord, "updateGuards", updateGuard);
@@ -1745,7 +1745,7 @@ function addDevtools(app, router, matcher) {
         node.tags.push({
           label: (info.name ? `${info.name.toString()}: ` : "") + info.path,
           textColor: 0,
-          tooltip: "This component is rendered by &lt;router-view&gt;",
+          tooltip: "This component is rendered by &lt;router-views&gt;",
           backgroundColor: PINK_500
         });
       }

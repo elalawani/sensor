@@ -15,6 +15,8 @@ import ProfileView from "@/views/ProfileView.vue";
 import NewDataFormView from "@/views/NewDataFormView.vue";
 import TodoView from "@/views/TodoView.vue";
 import NewDocuFormsView from "@/views/NewDocuFormsView.vue";
+import BarthelIndex from "@/components/patientView/questionnaires/creations/BarthelIndex.vue";
+import NurseDiagnose from "@/components/patientView/questionnaires/creations/NurseDiagnose.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -73,9 +75,20 @@ const router = createRouter({
                 {
                     path: '/patients/:id/medications',
                     name: 'medications',
-                    component: medications
+                    component: medications,
                 },
-                 {
+                {
+                    path: '/patients/:id/BarthelIndex',
+                    name: 'BarthelIndex',
+                    component: BarthelIndex
+                },
+                {
+                    path: '/patients/:id/NurseDiagnose',
+                    name: 'NurseDiagnose',
+                    component: NurseDiagnose,
+                },
+
+                {
                     path: '/patients/:id/sensorData',
                     name: 'sensorData',
                     component: sensorData
